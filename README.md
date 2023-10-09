@@ -1,2 +1,2 @@
 # devour.js
-Javascript framework for micro-frontends
+A JavaScript Framework
