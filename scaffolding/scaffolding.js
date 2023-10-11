@@ -1,14 +1,21 @@
 const fs = require('fs-extra')
 const path = require('path')
 
-const sourceDir = __dirname  // Current directory (where your package is)
-const targetDir = process.cwd()  // The user's project directory
+function scaffoldProject(templateName = 'base') {
+    const sourceDir = path.join(__dirname, 'templates', templateName)
+    const targetDir = process.cwd()  // Use current directory
 
-// List of directories and files to copy
-const itemsToCopy = ['public', 'src', 'index.js']
+    // Check if the template exists
+    if (!fs.existsSync(sourceDir)) {
+        console.error(`Template "${templateName}" not found.`)
+        process.exit(1)
+    }
 
-itemsToCopy.forEach(item => {
-  fs.copySync(path.join(sourceDir, item), path.join(targetDir, item))
-})
+    // Copy template files to the target directory
+    fs.copySync(sourceDir, targetDir)
 
-console.log('Devour framework set up complete!')
+    console.log('Project scaffolded successfully!')
+}
+
+// Run the scaffolding
+scaffoldProject()
