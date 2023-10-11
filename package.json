@@ -1,3 +1,7 @@
 {
   "main": "src/index.js"
+
+  "scripts": {
+    "postinstall": "node src/scaffolding/scaffold.js"
+  }
 }
