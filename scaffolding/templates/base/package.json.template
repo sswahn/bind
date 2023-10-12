@@ -1,6 +1,17 @@
 {
-  "scripts": {
-    "start": "webpack serve --mode development",
-    "build": "webpack --mode production"
-  }
+    "name": "{{PROJECT_NAME}}",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "webpack serve --mode development",
+        "build": "webpack --mode production"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "webpack": "^5.x.x",
+        "webpack-cli": "^4.x.x",
+        "webpack-dev-server": "^3.x.x",
+        "@babel/core": "^7.x.x",
+        "@babel/preset-env": "^7.x.x",
+        "babel-loader": "^8.x.x"
+    }
 }
