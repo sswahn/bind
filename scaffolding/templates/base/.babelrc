@@ -5,9 +5,6 @@
     */
     "presets": [
         "@babel/preset-env", //compiling ES2015+ syntax
-        ["@babel/preset-react", { //for react
-          "runtime": "automatic"
-        }]
     ],
     /*
         Babel's code transformations are enabled by applying plugins (or presets) to your configuration file.
