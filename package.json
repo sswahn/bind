@@ -6,5 +6,9 @@
   "scripts": {
     "test": "jest",
     "postinstall": "node src/scaffolding/scaffold.js"
+  },
+  "devDependencies": {
+    "jest": "^27.0.6",  
+    "jsdom": "^18.1.0" 
   }
 }
