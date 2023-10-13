@@ -1,5 +1,5 @@
 {
-  "name": "devour",
+  "name": "devour.js",
   "version": "1.0.0",
   "description": "A javascript framework.",
   "main": "src/index.js",
