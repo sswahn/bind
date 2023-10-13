@@ -82,6 +82,25 @@ describe('html function', () => {
     expect(element.childNodes[1].nodeType).toBe(Node.TEXT_NODE);
     expect(element.childNodes[1].textContent).toBe('true');
   });
+
+    test('it should handle complex attributes correctly', () => {
+    const element = html('div', { 
+      'data-test': 'testdata',
+      'disabled': true
+    }, []);
+
+    expect(element.getAttribute('data-test')).toBe('testdata');
+    expect(element.hasAttribute('disabled')).toBe(true);
+  });
+
+  test('it should handle deeply nested children', () => {
+    const deepChild = html('span', {}, ['Deep Child']);
+    const child = html('div', {}, ['Child', deepChild]);
+    const element = html('div', {}, ['Root', child]);
+
+    expect(element.childNodes.length).toBe(2);
+    expect(element.childNodes[1].childNodes[1]).toBe(deepChild);
+  });
 });
 
 describe('render function', () => {
@@ -134,6 +153,19 @@ describe('render function', () => {
     render(element, root); // Rendering again
 
     expect(root.children.length).toBe(originalChildCount); // Ensure we didn't append it again.
+  });
+
+  test('it should correctly use WeakMap for similar but different elements', () => {
+    const element1 = html('div', {}, ['Hello']);
+    render(element1, root);
+    expect(root.firstChild).toBe(element1);
+
+    const element2 = html('div', {}, ['Hello']); // Similar to element1 but a different instance
+    render(element2, root);
+
+    // If WeakMap behaves correctly, element2 should be appended and not replace element1
+    expect(root.childNodes.length).toBe(2);
+    expect(root.childNodes[1]).toBe(element2);
   });
 });
 
