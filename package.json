@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "jest",
-    "postinstall": "node src/scaffolding/scaffold.js"
+    "postinstall": "node ./src/scaffolding/scaffold.js"
   },
   "devDependencies": {
     "jest": "^29.7.0",  
