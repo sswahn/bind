@@ -1,4 +1,4 @@
-import { html, render } from './path_to_functions_file' // replace 'path_to_functions_file' with the path to your functions file
+import { html, render } from './src/core/dom'
 
 describe('html function', () => {
   
