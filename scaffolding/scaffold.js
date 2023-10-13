@@ -1,21 +1,28 @@
-const fs = require('fs-extra')
-const path = require('path')
+const fs = require('fs-extra');
+const path = require('path');
+const { execSync } = require('child_process');
 
-function scaffoldProject(templateName = 'base') {
-    const sourceDir = path.join(__dirname, 'templates', templateName)
-    const targetDir = process.cwd()  // Use current directory
+const scriptDirectory = __dirname;
+const projectDirectory = process.cwd();
 
-    // Check if the template exists
-    if (!fs.existsSync(sourceDir)) {
-        console.error(`Template "${templateName}" not found.`)
-        process.exit(1)
-    }
+const sourceDir = path.join(scriptDirectory, 'templates', 'base'); 
+const targetDir = projectDirectory;
 
-    // Copy template files to the target directory
-    fs.copySync(sourceDir, targetDir)
+// Copy template files to the target directory
+fs.copySync(sourceDir, targetDir);
 
-    console.log('Project scaffolded successfully!')
+// Rename package.json.template to package.json
+const packageTemplatePath = path.join(targetDir, 'package.json.template');
+const packagePath = path.join(targetDir, 'package.json');
+
+if (fs.existsSync(packageTemplatePath)) {
+    fs.renameSync(packageTemplatePath, packagePath);
 }
 
-// Run the scaffolding
-scaffoldProject()
+// Install dependencies
+execSync('npm install', {
+  cwd: targetDir,
+  stdio: 'inherit'
+});
+
+console.log('Project scaffolded and dependencies installed successfully!');
