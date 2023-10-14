@@ -4,14 +4,14 @@ A JavaScript Framework
 (Alpha Release)
 
 ## Example
-```
+```javascript
 // App.js
 import { createStore, render } from '@sswahn/bind'
 import Main from './Main'
 createStore({ counter: 0 })
 return render(Main(), document.getElementById('root'))
 ```
-```
+```javascript
 // Main.js
 import { bind, html, render } from '@sswahn/bind'
 import Counter from './Counter'
@@ -24,7 +24,8 @@ const Main = parent => {
   return render(element, parent)
 }
 ```
-```
+```javascript
+// Counter.js
 import { provider, html, render } from '@sswahn/bind'
 
 const Counter = parent => {
@@ -38,7 +39,8 @@ const Counter = parent => {
 
 export default Counter
 ```
-```
+```javascript
+// DisplayCount.js
 import { provider, html, render, bind } from '@sswahn/bind'
 
 const DisplayCount = parent => {
