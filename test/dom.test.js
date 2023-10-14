@@ -87,11 +87,8 @@ describe('html function', () => {
 })
 
 describe('render function', () => {
-  let root;
-
-  beforeEach(() => {
-    root = document.createElement('div')
-  })
+ 
+  const root = document.createElement('div')
 
   test('it should append an element to root', () => {
     const element = html('div', {}, ['Hello'])
