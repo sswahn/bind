@@ -38,7 +38,7 @@ Dispatches an action to the store.
 
 Usage:
 ```javascript
-dispatch({ type: "increment", payload: 1 })
+dispatch({ type: 'count', payload: 1 })
 ```
 `bind(type, component)`  
 
