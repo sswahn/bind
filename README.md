@@ -62,3 +62,66 @@ const DisplayCount = parent => {
 
 export default bind('counter', DisplayCount)  // Component is bound to state updates
 ```
+
+## Documentation
+### State Management:
+`createStore(initialState)`
+Used to create a new store with the given initial state.
+
+Usage:
+```
+createStore({
+  count: 0,
+  user: null
+})
+```
+`provider()`
+Provides the current state and dispatch method.
+
+Usage:
+```
+const { context, dispatch } = provider()
+
+```
+`dispatch(action)`
+Dispatches an action to the store.
+
+Usage:
+```
+dispatch({ type: "increment", payload: 1 })
+```
+`bind(type, component)`
+Binds a component to state changes.
+
+Usage:
+```
+const BoundComponent = bind("count", MyComponent)
+```
+### Component Rendering:
+`html(type, attributes, children)`
+A utility function to create DOM elements.
+
+Parameters:
+  · type: The type of DOM element to create (e.g., "div", "span").
+  · attributes: An object of attributes to apply to the DOM element.
+  · children: An array of child nodes or text to append to the created element.
+  
+Usage:
+```
+const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
+  html('span', {}, ['Child span'])
+])
+```
+`render(element, root)`
+Renders a given component (or DOM element) into a specified DOM node.
+
+Parameters:
+  · element: The DOM element or component to render.
+  · root: The root DOM element to append the given element to.
+  
+Usage:
+```
+const root = document.getElementById('app')
+const myComponent = html('div', {}, ['My Component'])
+render(myComponent, root)
+```
