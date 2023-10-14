@@ -85,7 +85,7 @@ render(myComponent, root)
 import { createStore, render } from '@sswahn/bind'
 import Main from './Main'
 createStore({ counter: 0 })
-return render(Main(), document.getElementById('root'))
+Main(document.getElementById('root'))
 ```
 ```javascript
 // Main.js
