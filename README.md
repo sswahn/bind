@@ -84,6 +84,7 @@ render(myComponent, root)
 // App.js
 import { createStore, render } from '@sswahn/bind'
 import Main from './Main'
+
 createStore({ counter: 0 })
 Main(document.getElementById('root'))
 ```
