@@ -1,4 +1,4 @@
-# Bind · (Alpha Release)
+# Bind ·
 A JavaScript Framework
 
 
