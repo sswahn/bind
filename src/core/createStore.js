@@ -5,7 +5,7 @@ const observables = new WeakMap()
 
 //TODO: error reporting system & unit tests
 
-export function createStore(initialState) {
+export const createStore = initialState => {
   if (typeof action !== 'object' || Array.isArray(action)) {
     return console.error('TypeError: createStore argument must be an object literal.')
   }
