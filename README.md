@@ -1,4 +1,4 @@
-# Bind ·
+# Bind
 A JavaScript Framework
 
 
