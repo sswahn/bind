@@ -9,7 +9,7 @@ Dispatch actions to update the state,
 Bind components to state changes and auto-update them.
 
 ## Documentation
-### State Management:
+**State Management:**
 `createStore(initialState)`  
 
 Used to create a new store with the given initial state.
