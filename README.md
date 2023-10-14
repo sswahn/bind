@@ -66,6 +66,7 @@ export default bind('counter', DisplayCount)  // Component is bound to state upd
 ## Documentation
 ### State Management:
 `createStore(initialState)`  
+
 Used to create a new store with the given initial state.
 
 Usage:
