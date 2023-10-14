@@ -10,5 +10,10 @@
   "devDependencies": {
     "jest": "^29.7.0",  
     "jsdom": "^22.1.0" 
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
   }
 }
