@@ -56,3 +56,4 @@ const DisplayCount = parent => {
 
 export default bind('counter', DisplayCount)  // Component is bound to state updates
 ```
+## Documentation
