@@ -1,4 +1,4 @@
-import { html, render } from './src/core/dom'
+import { html, render } from '../src/core/dom'
 
 describe('html function', () => {
   
