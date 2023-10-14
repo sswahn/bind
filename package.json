@@ -4,8 +4,7 @@
   "description": "A javascript framework.",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest",
-    "postinstall": "node ./src/scaffolding/scaffold.js"
+    "test": "jest"
   },
   "devDependencies": {
     "jest": "^29.7.0",  
