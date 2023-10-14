@@ -6,8 +6,7 @@ The framework provides core utilities to:
 
 Create a centralized state store,
 Dispatch actions to update the state,
-Bind components to state changes and auto-update them,
-Observe and unbind components from state changes
+Bind components to state changes and automatically update them.
 
 ## Documentation
 ### State Management:
