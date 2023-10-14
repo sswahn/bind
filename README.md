@@ -23,6 +23,8 @@ const Main = parent => {
   DisplayCount(element)
   return render(element, parent)
 }
+
+export default Main
 ```
 ```javascript
 // Counter.js
