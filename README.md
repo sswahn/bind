@@ -1,4 +1,4 @@
-# devour.js
+# bind.js
 A JavaScript Framework
 
 (Alpha Release)
