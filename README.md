@@ -81,7 +81,7 @@ render(myComponent, root)
 ```
 ## Example
 ```javascript
-// App.js
+// index.js
 import { createStore, render } from '@sswahn/bind'
 import Main from './Main'
 
