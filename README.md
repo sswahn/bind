@@ -33,7 +33,10 @@ const Counter = parent => {
   const increment = event => {
     dispatch({ type: 'counter', payload: context.counter + 1 })
   }
-  const element = html('button', { onClick: increment })
+  const element = html('button', {
+    onClick: increment,
+    textContent: '+'
+  })
   return render(element, parent)
 }
 
