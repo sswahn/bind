@@ -46,7 +46,7 @@ Usage:
 ```javascript
 const BoundComponent = bind("count", MyComponent)
 ```
-### Component Rendering:
+**Component Rendering:**
 `html(type, attributes, children)`  
 
 A utility function to create DOM elements.
