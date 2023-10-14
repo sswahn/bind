@@ -1,7 +1,7 @@
-# Bind
+# Bind · (Alpha Release)
 A JavaScript Framework
 
-(Alpha Release)
+
 
 ## Example
 ```javascript
