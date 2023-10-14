@@ -2,6 +2,7 @@
   "name": "@sswahn/bind",
   "version": "1.0.2",
   "description": "A javascript framework.",
+  "type": "module",
   "keywords": [
     "bind",
     "framework"
