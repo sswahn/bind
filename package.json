@@ -3,7 +3,8 @@
   "version": "1.0.2",
   "description": "A javascript framework.",
   "keywords": [
-    "bind"
+    "bind",
+    "framework"
   ],
   "repository": {
     "type": "git",
