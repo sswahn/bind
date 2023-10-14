@@ -87,8 +87,11 @@ describe('html function', () => {
 })
 
 describe('render function', () => {
-  
-  const root = document.createElement('div')
+  let root;
+
+  beforeEach(() => {
+    root = document.createElement('div')
+  })
 
   test('it should append an element to root', () => {
     const element = html('div', {}, ['Hello'])
@@ -131,11 +134,13 @@ describe('render function', () => {
     const element1 = html('div', {}, ['Hello'])
     render(element1, root)
     expect(root.firstChild).toBe(element1)
+
     const element2 = html('div', {}, ['Hello']) // Similar to element1 but a different instance
     render(element2, root)
 
-    // If WeakMap behaves correctly, element2 should be appended and not replace element1
-    expect(root.childNodes.length).toBe(2)
-    expect(root.childNodes[1]).toBe(element2)
+    // element2 should have replaced element1, so only element2 should be in the DOM
+    expect(root.firstChild).toBe(element2)
+    expect(root.childNodes.length).toBe(1)
   })
+
 })
