@@ -69,7 +69,7 @@ export default bind('counter', DisplayCount)  // Component is bound to state upd
 Used to create a new store with the given initial state.
 
 Usage:
-```
+```javascript
 createStore({
   count: 0,
   user: null
@@ -79,7 +79,7 @@ createStore({
 Provides the current state and dispatch method.
 
 Usage:
-```
+```javascript
 const { context, dispatch } = provider()
 
 ```
@@ -87,14 +87,14 @@ const { context, dispatch } = provider()
 Dispatches an action to the store.
 
 Usage:
-```
+```javascript
 dispatch({ type: "increment", payload: 1 })
 ```
 `bind(type, component)`
 Binds a component to state changes.
 
 Usage:
-```
+```javascript
 const BoundComponent = bind("count", MyComponent)
 ```
 ### Component Rendering:
@@ -107,7 +107,7 @@ Parameters:
   · children: An array of child nodes or text to append to the created element.
   
 Usage:
-```
+```javascript
 const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
   html('span', {}, ['Child span'])
 ])
@@ -120,7 +120,7 @@ Parameters:
   · root: The root DOM element to append the given element to.
   
 Usage:
-```
+```javascript
 const root = document.getElementById('app')
 const myComponent = html('div', {}, ['My Component'])
 render(myComponent, root)
