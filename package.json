@@ -7,7 +7,11 @@
   "scripts": {
     "test": "jest"
   },
+  "dependencies": {
+    "@babel/runtime": "^7.x.x"
+  },
   "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.x.x",
     "jest": "^29.7.0",  
     "jsdom": "^22.1.0" 
   },
