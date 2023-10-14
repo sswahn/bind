@@ -1,4 +1,4 @@
-# bind
+# Bind
 A JavaScript Framework
 
 (Alpha Release)
