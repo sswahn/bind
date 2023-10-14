@@ -46,7 +46,7 @@ Binds a component to state changes.
 
 Usage:
 ```javascript
-const BoundComponent = bind("count", MyComponent)
+const BoundComponent = bind('count', MyComponent)
 ```
 **Component Rendering:**  
 
