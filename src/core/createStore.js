@@ -6,7 +6,7 @@ const observables = new WeakMap()
 //TODO: error reporting system & unit tests
 
 export const createStore = initialState => {
-  if (typeof action !== 'object' || Array.isArray(action)) {
+  if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     return console.error('TypeError: createStore argument must be an object literal.')
   }
   state = structuredClone(initialState)
