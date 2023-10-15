@@ -110,7 +110,10 @@ import { provider, html, render } from '@sswahn/bind'
 const Counter = parent => {
   const { context, dispatch } = provider()
   const increment = event => {
-    dispatch({ type: 'counter', payload: context.counter + 1 })
+    dispatch({
+      type: 'counter',
+      payload: context.counter + 1
+    })
   }
   const element = html('button', {
     onClick: increment,
