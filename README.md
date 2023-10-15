@@ -127,7 +127,9 @@ import { provider, html, render, bind } from '@sswahn/bind'
 
 const DisplayCount = parent => {
   const { context } = provider()
-  const element = html('p', {textContent: context.counter || 0})
+  const element = html('p', {
+    textContent: context.counter || 0
+  })
   return render(element, parent)
 }
 
