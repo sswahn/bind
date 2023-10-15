@@ -6,6 +6,11 @@ const observables = new WeakMap()
 //TODO: error reporting system & unit tests
 
 export const createStore = initialState => {
+
+  console.log('createStore called with: ', initialState)
+  console.log('typeof: ', typeof initialState !== 'object')
+  console.log('isArray: ', Array.isArray(initialState))
+  
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     return console.error('TypeError: createStore argument must be an object literal.')
   }
