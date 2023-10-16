@@ -111,7 +111,7 @@ export const bind = (type, component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, () => component()])
-    const element = component(...parameters)
+    const element = component({context: {...state}, dispatch, params: parameters})
     observe(element, type, component) 
     return element
   }
