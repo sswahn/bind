@@ -23,7 +23,7 @@ createStore({
 })
 ```
 
-### Current State
+### Get State
 `context`  
 
 Provides a clone of the current bound state.
