@@ -23,6 +23,16 @@ createStore({
 })
 ```
 
+### Current State
+`context`  
+
+Provides a shallow copy of current state.
+
+Usage:
+```javascript
+context.count
+```
+
 ### Update State
 `dispatch(action)`  
 
