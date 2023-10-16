@@ -3,7 +3,7 @@ const queue = new Map()
 const subscribers = new Map()
 const observables = new WeakMap()
 
-//TODO: error reporting system & unit tests
+// TODO: unit tests
 
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
@@ -12,9 +12,10 @@ export const createStore = initialState => {
   state = structuredClone(initialState)
 }
 
+/*
 export const provider = () => {
   return { context: {...state}, dispatch}
-}
+}*/
   
 const dispatch = action => {
   if (typeof action !== 'object' || Array.isArray(action)) {
@@ -64,7 +65,7 @@ const notifySubscribers = type => {
 
 const handleNotification = notify => {
   try {
-    notify(state)
+    notify({ context: {...state}, dispatch})
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}`)
   }
@@ -141,8 +142,8 @@ const observe = (element, type, component) => {
   const id = crypto.randomUUID()
   observables.set(element, id)
 
-  const observer = new MutationObserver(mutationsList => {
-    const removed = mutationsList.reduce((acc, mutation) => [...acc, ...mutation.removedNodes], [])
+  const observer = new MutationObserver(mutations => {
+    const removed = mutations.reduce((acc, mutation) => [...acc, ...mutation.removedNodes], [])
     for (let node of removed) {
       if (node instanceof Element && observables.get(node) === id) {
         unbind(type, component)
