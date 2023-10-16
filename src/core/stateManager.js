@@ -112,25 +112,12 @@ export const bind = (type, component) => {
     return console.error('TypeError: bind function second argument must be a function.')
   }
   return (...parameters) => {
-    let realNode
-
-    if (componentMap.has(component)) {
-      const mapEntry = componentMap.get(component)
-      realNode = mapEntry.liveElement || mapEntry.freshElement
-    } else {
-      const freshElement = component({ context: { [type]: deepClone(state[type]) }, dispatch, params: parameters })
-      componentMap.set(component, { freshElement, liveElement: null })
-      realNode = freshElement
-    }
-    return realNode
-
-    /* original:
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, () => component()])
     const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
     observe(element, type, component) 
+    components.set(component, newElement)
     return element
-    */
   }
 }
 
