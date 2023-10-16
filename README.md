@@ -23,6 +23,7 @@ createStore({
 })
 ```
 <br />
+
 `dispatch(action)`  
 
 Dispatches an action to the store.
