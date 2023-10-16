@@ -55,12 +55,12 @@ const updateState = (type, payload) => {
 
 const notifySubscribers = type => {
   const subscriber = subscribers.get(type)
-  subscriber && subscriber.forEach(handleNotification)
+  subscriber && subscriber.forEach(notify => handleNotification(notify, type))
 }
 
-const handleNotification = notify => {
+const handleNotification = (notify, type) => {
   try {
-    notify({ context: {...state}, dispatch})
+    notify({ context: {[type]: deepClone(state[type])}, dispatch})
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}`)
   }
