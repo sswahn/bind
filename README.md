@@ -23,15 +23,6 @@ createStore({
   user: null
 })
 ```
-`provider()`  
-
-Provides the current state and dispatch method.
-
-Usage:
-```javascript
-const { context, dispatch } = provider()
-
-```
 `dispatch(action)`  
 
 Dispatches an action to the store.
@@ -77,50 +68,51 @@ Main(document.getElementById('root'))
 ```
 ```javascript
 // Main.js
-import { bind, html, render } from '@sswahn/bind'
+import { html } from '@sswahn/bind'
 import Counter from './Counter'
 import DisplayCount from './DisplayCount'
 
-const Main = parent => {
-  const element = html('div')
-  Counter(element)
-  DisplayCount(element)
-  return render(element, parent)
+const Main = () => {
+  const attributes = {
+    id:'main',
+    class: 'section'
+  }
+  const children = [
+    Counter()
+    DisplayCount()
+  ]
+  return html('main', attributes, children)
 }
 
 export default Main
 ```
 ```javascript
 // Counter.js
-import { provider, html, render } from '@sswahn/bind'
+import { html, bind } from '@sswahn/bind'
 
-const Counter = parent => {
-  const { context, dispatch } = provider()
+const Counter = ({ context, dispatch }) => {
   const increment = event => {
     dispatch({
       type: 'counter',
       payload: context.counter + 1
     })
   }
-  const element = html('button', {
+  return html('button', {
     onClick: increment,
     textContent: '+'
   })
-  return render(element, parent)
 }
 
-export default Counter
+export default bind('counter', Counter)
 ```
 ```javascript
 // DisplayCount.js
-import { provider, html, render, bind } from '@sswahn/bind'
+import { html, bind } from '@sswahn/bind'
 
-const DisplayCount = parent => {
-  const { context } = provider()
-  const element = html('p', {
-    textContent: context.counter || 0
+const DisplayCount = ({ context }) => {
+  return html('span', {
+    textContent: context.counter
   })
-  return render(element, parent)
 }
 
 export default bind('counter', DisplayCount)  // Component is bound to state updates
