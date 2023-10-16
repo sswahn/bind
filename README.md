@@ -6,8 +6,8 @@ The framework provides core utilities to:
 
   · Create a centralized state store  
   · Dispatch actions to update the state  
-  · Render DOM elements and components  
   · Bind components to state changes and auto-update them  
+  · Render DOM elements and components  
 
 ## Documentation
 **State Management:**  
@@ -65,20 +65,7 @@ const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
   html('span', {}, ['Child span'])
 ])
 ```
-`render(element, root)`  
 
-Renders a given component (or DOM element) into a specified DOM node.
-
-Parameters:
-  · element: The DOM element or component to render.
-  · root: The root DOM element to append the given element to.
-  
-Usage:
-```javascript
-const root = document.getElementById('app')
-const myComponent = html('div', {}, ['My Component'])
-render(myComponent, root)
-```
 ## Example
 ```javascript
 // index.js
