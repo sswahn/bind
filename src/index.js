@@ -1,3 +1,2 @@
-
-export { createStore, provider, bind } from './core/createStore.js'
-export { html, render } from './core/dom.js'
+export { createStore, bind } from './core/stateManager.js'
+export { html } from './core/dom.js'
