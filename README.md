@@ -59,9 +59,9 @@ const BoundComponent = bind('count', MyComponent)
 A utility function to create DOM elements.
 
 Parameters:  
-  · type: The type of DOM element to create (e.g., "div", "span").  
-  · attributes: An object of attributes to apply to the DOM element.  
-  · children: An array of child nodes or text to append to the created element.  
+  · **type**: The type of DOM element to create (e.g., "div", "span").  
+  · **attributes**: An object of attributes to apply to the DOM element.  
+  · **children**: An array of child nodes or text to append to the created element.  
   
 Usage:
 ```javascript
