@@ -128,5 +128,5 @@ const DisplayCount = ({ context }) => {
   })
 }
 
-export default bind('counter', DisplayCount)  // Component is bound to state updates
+export default bind('counter', DisplayCount)
 ```
