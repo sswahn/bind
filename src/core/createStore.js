@@ -3,7 +3,7 @@ const queue = new Map()
 const subscribers = new Map()
 const observables = new WeakMap()
 
-// TODO: unit tests
+// TODO: unit tests, rename file to stateManager.js
 
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
