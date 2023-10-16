@@ -33,6 +33,7 @@ Usage:
 dispatch({ type: 'count', payload: 1 })
 ```
 <br />
+
 `bind(type, component)`  
 
 Binds a component to state changes.
@@ -42,6 +43,7 @@ Usage:
 const BoundComponent = bind('count', MyComponent)
 ```
  <br />
+ 
 `html(type, attributes, children)`  
 
 A utility function to create DOM elements.
