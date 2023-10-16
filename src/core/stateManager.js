@@ -96,6 +96,10 @@ const processBatch = () => {
   state = { ...state, ...batch } // will state always be an object?
 } */
 
+const deepClone = value => {
+  return typeof value === 'object' && value !== null ? structuredClone(value) : value
+}
+
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
@@ -106,7 +110,7 @@ export const bind = (type, component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, () => component()])
-    const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
+    const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
     observe(element, type, component) 
     return element
   }
