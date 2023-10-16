@@ -21,7 +21,8 @@ createStore({
   count: 0,
   user: null
 })
-```  
+```
+<br /><br />
 
 `dispatch(action)`  
 
