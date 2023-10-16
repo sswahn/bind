@@ -2,6 +2,7 @@ let state = {}
 const queue = new Map()
 const subscribers = new Map()
 const observables = new WeakMap()
+const components = new WeakMap()
 
 // TODO: unit tests
 
@@ -60,11 +61,29 @@ const notifySubscribers = type => {
 
 const handleNotification = (notify, type) => {
   try {
-    notify({ context: {[type]: deepClone(state[type])}, dispatch})
+    const mapEntry = componentMap.get(notify)
+    const liveNode = mapEntry.liveElement
+    const newElement = notify({ context: { [type]: deepClone(state[type]) }, dispatch })
+    if (liveNode) {
+      deepDiff(liveNode, newElement, liveNode)
+    } else {
+      // This component hasn't been mounted to the live DOM yet.
+      // You might want to handle its initial mounting here, or it could be handled elsewhere in your code.
+    }
+    mapEntry.freshElement = newElement
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}`)
   }
 }
+
+/* original:
+const handleNotification = (notify, type) => {
+  try {
+    notify({ context: {[type]: deepClone(state[type])}, dispatch})
+  } catch (error) {
+    console.error(`Error notifying subscribers: ${error}`)
+  }
+}*/
 
 const continueProcessingQueue = key => {
   if (queue.size > 0) {
@@ -96,6 +115,43 @@ const processBatch = () => {
   state = { ...state, ...batch } // will state always be an object?
 } */
 
+function deepDiff(oldNode, newNode, realNode) {
+    // Check node type, tag, or other properties. If different, replace realNode.
+    if (oldNode.tagName !== newNode.tagName) {
+        const replacementNode = newNode.cloneNode(true);
+        realNode.parentNode.replaceChild(replacementNode, realNode);
+        return;
+    }
+
+    // Diff attributes
+    for (const attrName of newNode.getAttributeNames()) {
+        if (oldNode.getAttribute(attrName) !== newNode.getAttribute(attrName)) {
+            realNode.setAttribute(attrName, newNode.getAttribute(attrName));
+        }
+    }
+    for (const attrName of oldNode.getAttributeNames()) {
+        if (!newNode.hasAttribute(attrName)) {
+            realNode.removeAttribute(attrName);
+        }
+    }
+
+    // Diff children
+    for (let i = 0; i < newNode.children.length || i < oldNode.children.length; i++) {
+        const oldChildNode = oldNode.children[i];
+        const newChildNode = newNode.children[i];
+        const realChildNode = realNode.children[i];
+
+        if (!oldChildNode && newChildNode) {
+            realNode.appendChild(newChildNode.cloneNode(true));
+        } else if (oldChildNode && !newChildNode) {
+            realNode.removeChild(realChildNode);
+        } else if (oldChildNode && newChildNode) {
+            deepDiff(oldChildNode, newChildNode, realChildNode);
+        }
+    }
+}
+
+
 const deepClone = value => {
   return typeof value === 'object' && value !== null ? structuredClone(value) : value
 }
@@ -108,11 +164,25 @@ export const bind = (type, component) => {
     return console.error('TypeError: bind function second argument must be a function.')
   }
   return (...parameters) => {
+    let realNode
+
+    if (componentMap.has(component)) {
+      const mapEntry = componentMap.get(component)
+      realNode = mapEntry.liveElement || mapEntry.freshElement
+    } else {
+      const freshElement = component({ context: { [type]: deepClone(state[type]) }, dispatch, params: parameters })
+      componentMap.set(component, { freshElement, liveElement: null })
+      realNode = freshElement
+    }
+    return realNode
+
+    /* original:
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, () => component()])
     const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
     observe(element, type, component) 
     return element
+    */
   }
 }
 
