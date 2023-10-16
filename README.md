@@ -73,11 +73,11 @@ const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
 ## Example
 ```javascript
 // index.js
-import { createStore, render } from '@sswahn/bind'
+import { createStore } from '@sswahn/bind'
 import Main from './Main'
 
 createStore({ counter: 0 })
-render(Main(), document.getElementById('root'))
+document.getElementById('root').appendChild(Main())
 ```
 ```javascript
 // Main.js
