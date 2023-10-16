@@ -116,7 +116,7 @@ export const bind = (type, component) => {
     subscribers.set(type, [...existing, () => component()])
     const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
     observe(element, type, component) 
-    components.set(component, newElement)
+    components.set(component, element)
     return element
   }
 }
