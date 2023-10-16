@@ -10,7 +10,7 @@ The framework provides core utilities to:
   · Render DOM elements and components  
 
 ## Documentation  
-**Create State**
+### Create State
 `createStore(initialState)`  
 
 Used to create a new store with the given initial state.
@@ -23,7 +23,7 @@ createStore({
 })
 ```
 <br />
-
+### Update State
 `dispatch(action)`  
 
 Dispatches an action to the store.
@@ -33,7 +33,7 @@ Usage:
 dispatch({ type: 'count', payload: 1 })
 ```
 <br />
-
+### Bind Component to State
 `bind(type, component)`  
 
 Binds a component to state changes.
@@ -43,7 +43,7 @@ Usage:
 const BoundComponent = bind('count', MyComponent)
 ```
  <br />
- 
+ ### Create an HTML Element
 `html(type, attributes, children)`  
 
 A utility function to create DOM elements.
