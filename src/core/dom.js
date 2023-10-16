@@ -1,7 +1,3 @@
-const components = new WeakMap()
-
-//TODO: error reporting & unit tests
-
 export const html = (type, attributes = {}, children = []) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: html first argument must be a string.')
@@ -26,22 +22,5 @@ export const html = (type, attributes = {}, children = []) => {
     child instanceof Node ? child : document.createTextNode(child)
   )
   element.append(...nodes)
-  return element
-}
-
-export const render = (element, root) => {
-  if (!(element instanceof Element)) {
-    return console.error('Invalid component element provided to render.')
-  }
-  if (!(root instanceof Element)) {
-    return console.error('Invalid root element provided to render.')
-  }
-  if (components.has(element)) {
-    const existing = components.get(element)
-    existing.replaceWith(element)
-  } else {
-    components.set(element, element)
-    root.appendChild(element)
-  }
   return element
 }
