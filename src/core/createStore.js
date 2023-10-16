@@ -11,11 +11,6 @@ export const createStore = initialState => {
   }
   state = structuredClone(initialState)
 }
-
-/*
-export const provider = () => {
-  return { context: {...state}, dispatch}
-}*/
   
 const dispatch = action => {
   if (typeof action !== 'object' || Array.isArray(action)) {
