@@ -26,7 +26,7 @@ createStore({
 ### Current State
 `context`  
 
-Provides a shallow copy of the bound state.
+Provides a clone of the current bound state.
 
 Usage:
 ```javascript
