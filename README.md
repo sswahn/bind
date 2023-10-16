@@ -10,7 +10,7 @@ The framework provides core utilities to:
   · Render DOM elements and components  
 
 ## Documentation  
-
+**Create State**
 `createStore(initialState)`  
 
 Used to create a new store with the given initial state.
