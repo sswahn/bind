@@ -1,4 +1,4 @@
-import { html, render } from '../src/core/dom.js'
+import { html } from '../src/core/dom.js'
 
 describe('html function', () => {
   
@@ -84,60 +84,4 @@ describe('html function', () => {
     expect(element.childNodes.length).toBe(2)
     expect(element.childNodes[1].childNodes[1]).toBe(deepChild)
   })
-})
-
-describe('render function', () => {
- 
-  const root = document.createElement('div')
-
-  test('it should append an element to root', () => {
-    const element = html('div', {}, ['Hello'])
-    render(element, root)
-    expect(root.firstChild).toBe(element)
-  })
-
-  test('it should replace existing component', () => {
-    const element1 = html('div', {}, ['First'])
-    render(element1, root)
-    const element2 = html('div', {}, ['Second'])
-    render(element2, root)
-    expect(root.firstChild).toBe(element2)
-    expect(root.children.length).toBe(1)
-  })
-
-  test('it should error if element is not an instance of Element', () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
-    render('string', document.createElement('div'))
-    expect(consoleSpy).toHaveBeenCalledWith('Invalid component element provided to render.')
-    consoleSpy.mockRestore()
-  })
-
-  test('it should error if root is not an instance of Element', () => {
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation()
-    render(document.createElement('div'), 'string')
-    expect(consoleSpy).toHaveBeenCalledWith('Invalid root element provided to render.')
-    consoleSpy.mockRestore()
-  })
-
-  test('it should replace the element if rendered multiple times', () => {
-    const element = html('div', {}, ['Hello'])
-    render(element, root)
-    const originalChildCount = root.children.length
-    render(element, root) // Rendering again
-    expect(root.children.length).toBe(originalChildCount) // Ensure we didn't append it again.
-  })
-
-  test('it should correctly use WeakMap for similar but different elements', () => {
-    const element1 = html('div', {}, ['Hello'])
-    render(element1, root)
-    expect(root.firstChild).toBe(element1)
-
-    const element2 = html('div', {}, ['Hello']) // Similar to element1 but a different instance
-    render(element2, root)
-
-    // element2 should have replaced element1, so only element2 should be in the DOM
-    expect(root.firstChild).toBe(element2)
-    expect(root.childNodes.length).toBe(1)
-  })
-
 })
