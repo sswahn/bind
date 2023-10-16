@@ -22,7 +22,7 @@ createStore({
   user: null
 })
 ```
-<br />
+
 ### Update State
 `dispatch(action)`  
 
@@ -32,7 +32,7 @@ Usage:
 ```javascript
 dispatch({ type: 'count', payload: 1 })
 ```
-<br />
+
 ### Bind Component to State
 `bind(type, component)`  
 
@@ -42,7 +42,7 @@ Usage:
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
- <br />
+
  ### Create an HTML Element
 `html(type, attributes, children)`  
 
