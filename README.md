@@ -131,4 +131,4 @@ const DisplayCount = ({ context }) => {
 export default bind('counter', DisplayCount)
 ```
 ## Licence
-Bind is [Link MIT Licensed](https://github.com/sswahn/bind/blob/main/LICENSE)
+Bind is [MIT Licensed](https://github.com/sswahn/bind/blob/main/LICENSE)
