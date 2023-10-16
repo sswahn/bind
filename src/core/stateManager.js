@@ -61,16 +61,14 @@ const notifySubscribers = type => {
 
 const handleNotification = (notify, type) => {
   try {
-    const item = components.get(notify)
-    const liveNode = item.liveElement
+    const liveNode = componentMap.get(notify)
     const newElement = notify({ context: { [type]: deepClone(state[type]) }, dispatch })
     if (liveNode) {
-      deepDiff(liveNode, newElement, liveNode)
+      deepDiff(liveNode, newElement, liveNode);
     } else {
-      // This component hasn't been mounted to the live DOM yet.
-      // You might want to handle its initial mounting here, or it could be handled elsewhere in your code.
+      rootNode.appendChild(newElement);
+      componentMap.set(notify, newElement);
     }
-    item.freshElement = newElement
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}`)
   }
