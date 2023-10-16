@@ -87,7 +87,7 @@ import DisplayCount from './DisplayCount'
 
 const Main = () => {
   const attributes = {
-    id:'main',
+    id: 'main',
     class: 'section'
   }
   const children = [
