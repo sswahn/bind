@@ -61,34 +61,21 @@ const notifySubscribers = type => {
 
 const handleNotification = (notify, type) => {
   try {
-    const liveNode = componentMap.get(notify)
-    const newElement = notify({ context: { [type]: deepClone(state[type]) }, dispatch })
-    if (liveNode) {
-      deepDiff(liveNode, newElement, liveNode);
-    } else {
-      rootNode.appendChild(newElement);
-      componentMap.set(notify, newElement);
-    }
+    const liveNode = components.get(notify)
+    const newElement = notify({context: {[type]: deepClone(state[type])}, dispatch})
+    liveNode.parentNode.replaceChild(newElement, liveNode)
+    components.set(notify, newElement)
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}`)
   }
 }
-
-/* original:
-const handleNotification = (notify, type) => {
-  try {
-    notify({ context: {[type]: deepClone(state[type])}, dispatch})
-  } catch (error) {
-    console.error(`Error notifying subscribers: ${error}`)
-  }
-}*/
 
 const continueProcessingQueue = key => {
   if (queue.size > 0) {
     processQueue(key + 1)
   }
 }
-  
+
 /* Add to processQueue to perform batch update:
 if (queue.size >= 10) {
   return processBatch()
@@ -112,43 +99,6 @@ const processBatch = () => {
 
   state = { ...state, ...batch } // will state always be an object?
 } */
-
-function deepDiff(oldNode, newNode, realNode) {
-    // Check node type, tag, or other properties. If different, replace realNode.
-    if (oldNode.tagName !== newNode.tagName) {
-        const replacementNode = newNode.cloneNode(true);
-        realNode.parentNode.replaceChild(replacementNode, realNode);
-        return;
-    }
-
-    // Diff attributes
-    for (const attrName of newNode.getAttributeNames()) {
-        if (oldNode.getAttribute(attrName) !== newNode.getAttribute(attrName)) {
-            realNode.setAttribute(attrName, newNode.getAttribute(attrName));
-        }
-    }
-    for (const attrName of oldNode.getAttributeNames()) {
-        if (!newNode.hasAttribute(attrName)) {
-            realNode.removeAttribute(attrName);
-        }
-    }
-
-    // Diff children
-    for (let i = 0; i < newNode.children.length || i < oldNode.children.length; i++) {
-        const oldChildNode = oldNode.children[i];
-        const newChildNode = newNode.children[i];
-        const realChildNode = realNode.children[i];
-
-        if (!oldChildNode && newChildNode) {
-            realNode.appendChild(newChildNode.cloneNode(true));
-        } else if (oldChildNode && !newChildNode) {
-            realNode.removeChild(realChildNode);
-        } else if (oldChildNode && newChildNode) {
-            deepDiff(oldChildNode, newChildNode, realChildNode);
-        }
-    }
-}
-
 
 const deepClone = value => {
   return typeof value === 'object' && value !== null ? structuredClone(value) : value
