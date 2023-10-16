@@ -100,10 +100,10 @@ const Main = () => {
 export default Main
 ```
 ```javascript
-// Counter.js
+// Button.js
 import { html, bind } from '@sswahn/bind'
 
-const Counter = ({ context, dispatch }) => {
+const Button = ({ context, dispatch }) => {
   const increment = event => {
     dispatch({
       type: 'counter',
@@ -116,19 +116,19 @@ const Counter = ({ context, dispatch }) => {
   })
 }
 
-export default bind('counter', Counter)
+export default bind('counter', Button)
 ```
 ```javascript
-// DisplayCount.js
+// Display.js
 import { html, bind } from '@sswahn/bind'
 
-const DisplayCount = ({ context }) => {
+const Display = ({ context }) => {
   return html('span', {
     textContent: context.counter
   })
 }
 
-export default bind('counter', DisplayCount)
+export default bind('counter', Display)
 ```
 ## Licence
 Bind is [MIT Licensed](https://github.com/sswahn/bind/blob/main/LICENSE)
