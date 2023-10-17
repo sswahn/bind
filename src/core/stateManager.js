@@ -1,8 +1,9 @@
 let state = {}
 const queue = new Map()
 const subscribers = new Map()
-const observables = new WeakMap()
 const components = new WeakMap()
+const parentObservers = new WeakMap()
+const parentChildMap = new WeakMap()
 
 // TODO: unit tests
 
@@ -132,31 +133,47 @@ const unbind = (type, callback) => {
   }
 }
 
-/*
-Optimization: Each time you call observe, you're setting up a new MutationObserver. 
-If you're observing many components within the same parent element, this could become inefficient. 
-Consider reusing the same observer for the same parent, and just extending its logic to handle more child elements. 
-This, of course, comes with its own complexities and might not be necessary unless you notice performance issues.
-*/
-
 const observe = (element, type, component) => {
-  if (!element.parentElement) {
+  if (!(element instanceof Element)) {
+    return console.error('Provided element is not an instance of Element.')
+  }
+  const parent = element.parentElement
+  if (!parent) {
     return console.warn("Trying to observe an element that's not in the DOM.")
   }
-  const id = crypto.randomUUID()
-  observables.set(element, id)
-
+  if (!parentChildMap.has(parent)) {
+    parentChildMap.set(parent, new WeakMap())
+  }
+  const childMap = parentChildMap.get(parent)
+  if (childMap.has(element)) {
+    return console.warn("Already observing this element.")
+  }
+  childMap.set(element, true)
+  if (parentObservers.has(parent)) {
+    return
+  }
   const observer = new MutationObserver(mutations => {
-    const removed = mutations.reduce((acc, mutation) => [...acc, ...mutation.removedNodes], [])
+    const removed = mutations.reduce((acc, mutation) => {
+      return [...acc, ...mutation.removedNodes]
+    }, [])
     for (let node of removed) {
-      if (node instanceof Element && observables.get(node) === id) {
+      if (node instanceof Element && childMap.has(node)) {
         unbind(type, component)
-        observer.disconnect()
-        observables.delete(node)
-        break
+        childMap.delete(node)
       }
     }
+    if (childMap.size === 0) { 
+      unobserveParent(parent)
+    }
   })
-  
-  observer.observe(element.parentElement, { childList: true })
+  observer.observe(parent, { childList: true })
+  parentObservers.set(parent, observer)
+}
+
+const unobserveParent = parent => {
+  if (parentObservers.has(parent)) {
+    parentObservers.get(parent).disconnect()
+    parentObservers.delete(parent)
+    parentChildMap.delete(parent)
+  }
 }
