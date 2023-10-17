@@ -2,8 +2,7 @@ let state = {}
 const queue = new Map()
 const subscribers = new Map()
 const components = new WeakMap()
-const parentObservers = new WeakMap()
-const parentChildMap = new WeakMap()
+const observables = new WeakMap()
 
 // TODO: unit tests
 
@@ -109,7 +108,6 @@ const deepClone = value => {
   return typeof value === 'object' && value !== null ? structuredClone(value) : value
 }
 
-// TODO: implement third param "cleanup" function
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
@@ -139,45 +137,24 @@ const unbind = (type, callback) => {
 
 const observe = (element, type, component) => {
   if (!(element instanceof Element)) {
-    return console.error('Provided element is not an instance of Element.')
+    return console.error('Bound components must return instances of Element.')
   }
-  const parent = element.parentElement
-  if (!parent) {
-    return console.warn("Trying to observe an element that's not in the DOM.")
-  }
-  if (!parentChildMap.has(parent)) {
-    parentChildMap.set(parent, new WeakMap())
-  }
-  const childMap = parentChildMap.get(parent)
-  if (childMap.has(element)) {
-    return console.warn("Already observing this element.")
-  }
-  childMap.set(element, true)
-  if (parentObservers.has(parent)) {
+  if (observables.has(element)) {
     return
   }
+  observables.add(element)
   const observer = new MutationObserver(mutations => {
     const removed = mutations.reduce((acc, mutation) => {
       return [...acc, ...mutation.removedNodes]
     }, [])
     for (let node of removed) {
-      if (node instanceof Element && childMap.has(node)) {
+      if (node === element) {
         unbind(type, component)
-        childMap.delete(node)
+        observables.delete(element)
+        observer.disconnect()
+        return
       }
     }
-    if (childMap.size === 0) { 
-      unobserveParent(parent)
-    }
   })
-  observer.observe(parent, { childList: true })
-  parentObservers.set(parent, observer)
-}
-
-const unobserveParent = parent => {
-  if (parentObservers.has(parent)) {
-    parentObservers.get(parent).disconnect()
-    parentObservers.delete(parent)
-    parentChildMap.delete(parent)
-  }
+  observer.observe(document.body, {childList: true, subtree: true})
 }
