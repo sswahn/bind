@@ -62,6 +62,7 @@ const notifySubscribers = type => {
 
 const handleNotification = (notify, type) => {
   try {
+    // const { component, parameters } = notify
     const liveNode = components.get(notify)
     const newElement = notify({context: {[type]: deepClone(state[type])}, dispatch})
     liveNode.parentNode.replaceChild(newElement, liveNode)
@@ -114,7 +115,7 @@ export const bind = (type, component) => {
   }
   return (...parameters) => {
     const existing = subscribers.get(type) || []
-    subscribers.set(type, [...existing, component])
+    subscribers.set(type, [...existing, component]) // consider perserving parameters like so: {component, parameters}
     const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
     observe(element, type, component) 
     components.set(component, element)
