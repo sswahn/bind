@@ -137,9 +137,8 @@ export const bind = (type, component, cleanup = undefined) => {
 const unbind = (type, callback) => {
   try {
     const subscription = subscribers.get(type)
-    const index = subscription.indexOf(callback)
-    const spliced = subscription.toSpliced(index, 1)
-    subscribers.set(type, spliced)
+    const filtered = subscription.filter(item => item.component !== component)
+    subscribers.set(type, filtered)
   } catch (error) {
     console.error(`Error unbinding component.`)
   }
