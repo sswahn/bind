@@ -106,6 +106,7 @@ const deepClone = value => {
   return typeof value === 'object' && value !== null ? structuredClone(value) : value
 }
 
+// TODO: add optional third param "cleanup" function
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
