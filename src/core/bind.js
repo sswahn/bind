@@ -24,6 +24,9 @@ const dispatch = action => {
   if (!action.hasOwnProperty('payload')) {
     return console.error('Dispatch actions must have a property of "payload".')
   }
+  if (!Object.keys(state).includes(type)) {
+    return console.error(`Dispatched action type ${type} is not found in current state.`)
+  }
   
   const key = queue.size + 1
   queue.set(key, action)
@@ -43,7 +46,7 @@ const processQueue = key => {
     queue.delete(key)
     continueProcessingQueue(key)
   } catch (error) {
-    console.error(`Error processing queue: ${error}`)
+    console.error(`Error processing queue.`)
   }
 }
 
@@ -68,7 +71,7 @@ const handleNotification = (item, type) => {
     liveNode.parentNode.replaceChild(newElement, liveNode)
     components.set(component, newElement)
   } catch (error) {
-    console.error(`Error notifying subscribers: ${error}`)
+    console.error(`Error notifying subscribers.`)
   }
 }
 
@@ -134,7 +137,7 @@ const unbind = (type, callback) => {
     const spliced = subscription.toSpliced(index, 1)
     subscribers.set(type, spliced)
   } catch (error) {
-    console.error(`Error unsubscribing: ${error}`)
+    console.error(`Error unbinding component.`)
   }
 }
 
