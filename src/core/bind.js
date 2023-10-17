@@ -4,7 +4,6 @@ const subscribers = new Map()
 const components = new WeakMap()
 const parentObservers = new WeakMap()
 const parentChildMap = new WeakMap()
-const cleanupFunctions = new WeakMap()
 
 // TODO: unit tests
 
@@ -111,15 +110,12 @@ const deepClone = value => {
 }
 
 // TODO: implement third param "cleanup" function
-export const bind = (type, component, cleanup = undefined) => {
+export const bind = (type, component) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
   }
   if (typeof component !== 'function') {
     return console.error('TypeError: bind function second argument must be a function.')
-  }
-  if (cleanup !== undefined && typeof cleanup !== 'function') {
-    return console.error('TypeError: bind function third argument must be a function.')
   }
   return (...parameters) => {
     const existing = subscribers.get(type) || []
@@ -127,9 +123,6 @@ export const bind = (type, component, cleanup = undefined) => {
     const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
     observe(element, type, component) 
     components.set(component, element)
-    if (cleanup) {
-      cleanupFunctions.set(element, cleanup)
-    }
     return element
   }
 }
@@ -169,11 +162,6 @@ const observe = (element, type, component) => {
     }, [])
     for (let node of removed) {
       if (node instanceof Element && childMap.has(node)) {
-        const cleanup = cleanupFunctions.get(node)
-        if (cleanup) {
-          cleanup()
-          cleanupFunctions.delete(node)
-        }
         unbind(type, component)
         childMap.delete(node)
       }
