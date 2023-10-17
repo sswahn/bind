@@ -97,7 +97,7 @@ const Counter = () => {
   return html('div', attributes, children)
 }
 
-export default Main
+export default Counter
 ```
 ```javascript
 // Button.js
