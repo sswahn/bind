@@ -52,9 +52,9 @@ const processQueue = key => {
 
 const updateState = (type, payload) => {
   if (typeof payload === 'function') {
-    state = {...state, [type]: payload(state[type])}
+    state = structuredClone({...state, [type]: payload(state[type])})
   } else {
-    state = {...state, [type]: payload}
+    state = structuredClone({...state, [type]: payload})
   }
 }
 
