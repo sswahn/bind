@@ -74,10 +74,10 @@ const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
 ```javascript
 // index.js
 import { createStore } from '@sswahn/bind'
-import Main from './Main'
+import Counter from './Counter'
 
 createStore({ counter: 0 })
-document.getElementById('root').appendChild(Main())
+document.getElementById('root').appendChild(Counter())
 ```
 ```javascript
 // Counter.js
