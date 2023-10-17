@@ -106,13 +106,16 @@ const deepClone = value => {
   return typeof value === 'object' && value !== null ? structuredClone(value) : value
 }
 
-// TODO: add optional third param "cleanup" function
-export const bind = (type, component) => {
+// TODO: implement third param "cleanup" function
+export const bind = (type, component, cleanup = undefined) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
   }
   if (typeof component !== 'function') {
     return console.error('TypeError: bind function second argument must be a function.')
+  }
+  if (cleanup !== undefined && typeof cleanup !== 'function') {
+    return console.error('TypeError: bind function third argument must be a function.')
   }
   return (...parameters) => {
     const existing = subscribers.get(type) || []
