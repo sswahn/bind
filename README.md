@@ -80,21 +80,21 @@ createStore({ counter: 0 })
 document.getElementById('root').appendChild(Main())
 ```
 ```javascript
-// Main.js
+// Counter.js
 import { html } from '@sswahn/bind'
-import Counter from './Counter'
-import DisplayCount from './DisplayCount'
+import Button from './Button'
+import Display from './Display'
 
-const Main = () => {
+const Counter = () => {
   const attributes = {
-    id: 'main',
+    id: 'counter',
     class: 'section'
   }
   const children = [
-    Counter()
-    DisplayCount()
+    Button()
+    Display()
   ]
-  return html('main', attributes, children)
+  return html('div', attributes, children)
 }
 
 export default Main
