@@ -57,7 +57,7 @@ const updateState = (type, payload) => {
 const notifySubscribers = type => {
   try {
     const array = subscribers.get(type)
-    array && array.forEach(item => handleNotification(item, type))
+    array?.forEach(item => handleNotification(item, type))
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}.`)
   }
