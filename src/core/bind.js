@@ -171,6 +171,9 @@ const observe = (element, type, component) => {
     }, [])
     for (let node of removed) {
       if (node === element) {
+
+        console.log('observed removal of: ', node)
+        
         unbind(type, component)
         observables.delete(element)
         observer.disconnect()
