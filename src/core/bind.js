@@ -45,7 +45,7 @@ const processQueue = key => {
     queue.delete(key)
     continueProcessingQueue(key)
   } catch (error) {
-    console.error(`Error processing queue.`)
+    console.error(`Error processing queue: ${error}.`)
   }
 }
 
@@ -58,8 +58,8 @@ const updateState = (type, payload) => {
 }
 
 const notifySubscribers = type => {
-  const subscriber = subscribers.get(type)
-  subscriber && subscriber.forEach(item => handleNotification(item, type))
+  const array = subscribers.get(type)
+  array?.forEach(item => handleNotification(item, type))
 }
 
 const handleNotification = (item, type) => {
@@ -70,7 +70,7 @@ const handleNotification = (item, type) => {
     liveNode.parentNode.replaceChild(newElement, liveNode)
     components.set(component, newElement)
   } catch (error) {
-    console.error(`Error notifying subscribers.`)
+    console.error(`Error notifying subscribers: ${error}.`)
   }
 }
 
@@ -140,7 +140,7 @@ const observe = (element, type, component) => {
     return console.error('Bound components must return instances of Element.')
   }
   if (observables.get(element)) {
-    return
+    return console.warn('Element already being observed.')
   }
   observables.set(element, true)
   const observer = new MutationObserver(mutations => {
@@ -152,7 +152,7 @@ const observe = (element, type, component) => {
         unbind(type, component)
         observables.delete(element)
         observer.disconnect()
-        return
+        return console.log('Element unbound, unobserved.')
       }
     }
   })
