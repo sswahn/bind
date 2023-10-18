@@ -68,7 +68,7 @@ const handleNotification = (item, type) => {
   try {
     const { component, parameters } = item
     const liveNode = components.get(component)
-    const newElement = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
+    const newElement = component({context: structuredClone({[type]: state[type]}), dispatch, params: parameters})
     liveNode.parentNode.replaceChild(newElement, liveNode)
     components.set(component, newElement)
   } catch (error) {
@@ -106,10 +106,6 @@ const processBatch = () => {
   state = { ...state, ...batch } // will state always be an object?
 } */
 
-const deepClone = value => {
-  return typeof value === 'object' && value !== null ? structuredClone(value) : value
-}
-
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
@@ -120,7 +116,7 @@ export const bind = (type, component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
-    const element = component({context: {[type]: deepClone(state[type])}, dispatch, params: parameters})
+    const element = component({context: structuredClone({[type]: state[type]}), dispatch, params: parameters})
     observe(element, type, component) 
     components.set(component, element)
     return element
