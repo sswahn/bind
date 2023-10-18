@@ -114,7 +114,7 @@ export const bind = (type, component) => {
     return console.error('TypeError: bind function second argument must be a function.')
   }
   return (...parameters) => {
-    const existing = subscribers.get(type) || [] // consider using Map instead of array
+    const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
     const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
     observe(element, type, component) 
