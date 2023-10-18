@@ -10,6 +10,11 @@ export const createStore = initialState => {
   }
   state = {...initialState}
 }
+
+// provides state to unbound components that only require a single render
+export const provider = () => {
+  return {context: {...state}, dispatch} 
+}
   
 const dispatch = action => {
   if (typeof action !== 'object' || Array.isArray(action)) {
