@@ -26,6 +26,9 @@ const dispatch = action => {
   if (!Object.keys(state).includes(action.type)) {
     return console.error(`Dispatched action type ${action.type} is not found in current state.`)
   }
+  if (typeof action.payload === 'function') {
+    return console.error(`Dispatched action payload can not be a function.`)
+  }
   const key = queue.size + 1
   queue.set(key, action)
   if (queue.size === 1) {
@@ -48,11 +51,7 @@ const processQueue = key => {
 }
 
 const updateState = (type, payload) => {
-  if (typeof payload === 'function') {
-    state = {...state, [type]: payload(state[type])}
-  } else {
-    state = {...state, [type]: payload}
-  }
+  state = {...state, [type]: payload}
 }
 
 const notifySubscribers = type => {
@@ -77,34 +76,23 @@ const handleNotification = (item, type) => {
 }
 
 const continueProcessingQueue = key => {
-  if (queue.size > 0) {
+  const size = queue.size
+  if (size >= 10) {
+    return processBatch()
+  } 
+  if (size > 0) {
     processQueue(key + 1)
   }
 }
 
-/* Add to processQueue to perform batch update:
-if (queue.size >= 10) {
-  return processBatch()
-} 
-*/
-// consider batch dom updates when batch state change occurs //
-/*
-const processBatch = () => {
+const processBatch = type => {
   let batch = {}
-  
-  queue.forEach((update, key) => {
-    if (typeof update === 'object' && update !== null) {
-      batch = { ...batch, ...structuredClone(update) }
-    } else if (typeof update === 'function') {
-      batch = { ...batch, [type]: update(state) }
-    } else {
-      batch = { ...batch, update }
-    }
+  queue.forEach((payload, key) => {
+    batch = {...batch, [type]: payload}
     queue.delete(key)
   })
-
-  state = { ...state, ...batch } // will state always be an object?
-} */
+  state = { ...state, ...batch }
+}
 
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
