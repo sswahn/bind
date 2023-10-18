@@ -23,7 +23,7 @@ const dispatch = action => {
   if (!action.hasOwnProperty('payload')) {
     return console.error('Dispatch actions must have a property of "payload".')
   }
-  if (!Object.keys(state).includes(type)) {
+  if (!Object.keys(state).includes(action.type)) {
     return console.error(`Dispatched action type ${action.type} is not found in current state.`)
   }
   
