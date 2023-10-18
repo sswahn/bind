@@ -7,6 +7,8 @@ const observables = new WeakMap()
 // TODO: unit tests
 
 export const createStore = initialState => {
+  console.log('createStore: ', initialState)
+  
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     return console.error('TypeError: createStore argument must be an object literal.')
   }
@@ -14,6 +16,8 @@ export const createStore = initialState => {
 }
   
 const dispatch = action => {
+  console.log('dispatch: ', action)
+  
   if (typeof action !== 'object' || Array.isArray(action)) {
     return console.error('TypeError: dispatch argument must be an object literal.')
   }
@@ -38,6 +42,8 @@ const dispatch = action => {
 }
 
 const processQueue = key => {
+  console.log('processQueue: ', key)
+  
   try {
     const {type, payload} = queue.get(key)
     updateState(type, payload)
@@ -50,6 +56,8 @@ const processQueue = key => {
 }
 
 const updateState = (type, payload) => {
+  console.log('updateState: ', {type, payload})
+  
   if (typeof payload === 'function') {
     state = structuredClone({...state, [type]: payload(state[type])})
   } else {
@@ -58,11 +66,15 @@ const updateState = (type, payload) => {
 }
 
 const notifySubscribers = type => {
+  console.log('notifySubscribers: ', type)
+  
   const array = subscribers.get(type)
   array?.forEach(item => handleNotification(item, type))
 }
 
 const handleNotification = (item, type) => {
+  console.log('handleNotification: ', {item, type})
+  
   try {
     const { component, parameters } = item
     const liveNode = components.get(component)
@@ -75,6 +87,8 @@ const handleNotification = (item, type) => {
 }
 
 const continueProcessingQueue = key => {
+  console.log('continueProcessingQueue: ', key)
+  
   if (queue.size > 0) {
     processQueue(key + 1)
   }
@@ -105,10 +119,14 @@ const processBatch = () => {
 } */
 
 const deepClone = value => {
+  console.log('deepClone: ', value)
+  
   return typeof value === 'object' && value !== null ? structuredClone(value) : value
 }
 
 export const bind = (type, component) => {
+  console.log('bind: ', {type, component})
+  
   if (typeof type !== 'string') {
     return console.error('TypeError: bind function first argument must be a string.')
   }
@@ -126,6 +144,8 @@ export const bind = (type, component) => {
 }
 
 const unbind = (type, component) => {
+  console.log('unbind: ', {type, component})
+  
   try {
     const subscription = subscribers.get(type)
     const filtered = subscription.filter(item => item.component !== component)
@@ -136,6 +156,8 @@ const unbind = (type, component) => {
 }
 
 const observe = (element, type, component) => {
+  console.log('observe: ', {element, type, component})
+  
   if (!(element instanceof Element)) {
     return console.error('Bound components must return instances of Element.')
   }
