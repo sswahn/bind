@@ -30,6 +30,8 @@ const dispatch = action => {
   if (!Object.keys(state).includes(action.type)) {
     return console.error(`Dispatched action type ${action.type} is not found in current state.`)
   }
+
+  try {
   
   const key = queue.size + 1
   queue.set(key, action)
@@ -38,6 +40,10 @@ const dispatch = action => {
     queueMicrotask(() => {
       processQueue(key)
     })
+  }
+
+  } catch (error) {
+    console.error(`Error dispatching action: ${error}`)
   }
 }
 
@@ -57,19 +63,28 @@ const processQueue = key => {
 
 const updateState = (type, payload) => {
   console.log('updateState: ', {type, payload})
-  
+
+  try {
+    
   if (typeof payload === 'function') {
     state = structuredClone({...state, [type]: payload(state[type])})
   } else {
     state = structuredClone({...state, [type]: payload})
   }
+    
+  } catch (error) {
+    console.error(`Error updating state: ${error}`)
+  }
 }
 
 const notifySubscribers = type => {
   console.log('notifySubscribers: ', type)
-  
-  const array = subscribers.get(type)
-  array?.forEach(item => handleNotification(item, type))
+  try {
+    const array = subscribers.get(type)
+    array?.forEach(item => handleNotification(item, type))
+  } catch (error) {
+    console.error(`Error notifying subscribers: ${error}.`)
+  }
 }
 
 const handleNotification = (item, type) => {
