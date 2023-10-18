@@ -142,9 +142,7 @@ const observe = (element, type, component) => {
   }
   observables.set(element, true)
   const observer = new MutationObserver(mutations => {
-    const removed = mutations.reduce((acc, mutation) => {
-      return [...acc, ...mutation.removedNodes]
-    }, [])
+    const removed = mutations.map(mutation => mutation.removedNodes).flat()
     for (let node of removed) {
       if (node === element) {
         unbind(type, component)
