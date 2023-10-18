@@ -139,10 +139,10 @@ const observe = (element, type, component) => {
   if (!(element instanceof Element)) {
     return console.error('Bound components must return instances of Element.')
   }
-  if (observables.has(element)) {
+  if (observables.get(element)) {
     return
   }
-  observables.add(element)
+  observables.set(element, true)
   const observer = new MutationObserver(mutations => {
     const removed = mutations.reduce((acc, mutation) => {
       return [...acc, ...mutation.removedNodes]
