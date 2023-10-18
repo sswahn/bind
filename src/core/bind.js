@@ -57,7 +57,7 @@ const updateState = (type, payload) => {
 const notifySubscribers = type => {
   try {
     const array = subscribers.get(type)
-    array?.forEach(item => handleNotification(item, type))
+    array && array.forEach(item => handleNotification(item, type))
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}.`)
   }
@@ -88,7 +88,7 @@ const continueProcessingQueue = key => {
 const processBatch = () => {
   let batch = {}
   queue.forEach((action, key) => {
-    batch = {...batch, [action.type]: action.payload}
+    batch[action.type] = action.payload
     queue.delete(key)
   })
   state = {...state, ...batch}
