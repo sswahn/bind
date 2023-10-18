@@ -23,11 +23,11 @@ const dispatch = action => {
   if (!action.hasOwnProperty('payload')) {
     return console.error('Dispatch actions must have a property of "payload".')
   }
+  if (typeof action.payload === 'function') {
+    return console.error('TypeError: dispatched action payload cannot be a function.')
+  }
   if (!Object.keys(state).includes(action.type)) {
     return console.error(`Dispatched action type ${action.type} is not found in current state.`)
-  }
-  if (typeof action.payload === 'function') {
-    return console.error(`Dispatched action payload can not be a function.`)
   }
   const key = queue.size + 1
   queue.set(key, action)
@@ -85,13 +85,13 @@ const continueProcessingQueue = key => {
   }
 }
 
-const processBatch = type => {
+const processBatch = () => {
   let batch = {}
-  queue.forEach((payload, key) => {
-    batch = {...batch, [type]: payload}
+  queue.forEach((action, key) => {
+    batch = {...batch, [action.type]: action.payload}
     queue.delete(key)
   })
-  state = { ...state, ...batch }
+  state = {...state, ...batch}
 }
 
 export const bind = (type, component) => {
