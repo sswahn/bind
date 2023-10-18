@@ -4,8 +4,6 @@ const subscribers = new Map()
 const components = new WeakMap()
 const observables = new WeakMap()
 
-// TODO: unit tests
-
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     return console.error('TypeError: createStore argument must be an object literal.')
