@@ -125,13 +125,13 @@ export const bind = (type, component) => {
   }
 }
 
-const unbind = (type, callback) => {
+const unbind = (type, component) => {
   try {
     const subscription = subscribers.get(type)
     const filtered = subscription.filter(item => item.component !== component)
     subscribers.set(type, filtered)
   } catch (error) {
-    console.error(`Error unbinding component.`)
+    console.error(`Error unbinding component: ${error}.`)
   }
 }
 
