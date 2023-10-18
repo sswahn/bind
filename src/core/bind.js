@@ -24,7 +24,7 @@ const dispatch = action => {
     return console.error('Dispatch actions must have a property of "payload".')
   }
   if (!Object.keys(state).includes(type)) {
-    return console.error(`Dispatched action type ${type} is not found in current state.`)
+    return console.error(`Dispatched action type ${action.type} is not found in current state.`)
   }
   
   const key = queue.size + 1
