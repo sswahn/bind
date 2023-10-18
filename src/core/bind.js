@@ -10,7 +10,7 @@ export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     return console.error('TypeError: createStore argument must be an object literal.')
   }
-  state = structuredClone(initialState)
+  state = {...initialState}
 }
   
 const dispatch = action => {
@@ -49,9 +49,9 @@ const processQueue = key => {
 
 const updateState = (type, payload) => {
   if (typeof payload === 'function') {
-    state = structuredClone({...state, [type]: payload(state[type])})
+    state = {...state, [type]: payload(state[type])}
   } else {
-    state = structuredClone({...state, [type]: payload})
+    state = {...state, [type]: payload}
   }
 }
 
@@ -68,7 +68,7 @@ const handleNotification = (item, type) => {
   try {
     const { component, parameters } = item
     const liveNode = components.get(component)
-    const newElement = component({context: structuredClone({[type]: state[type]}), dispatch, params: parameters})
+    const newElement = component({context: {[type]: state[type]}, dispatch, params: parameters})
     liveNode.parentNode.replaceChild(newElement, liveNode)
     components.set(component, newElement)
   } catch (error) {
@@ -116,7 +116,7 @@ export const bind = (type, component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
-    const element = component({context: structuredClone({[type]: state[type]}), dispatch, params: parameters})
+    const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
     observe(element, type, component) 
     components.set(component, element)
     return element
