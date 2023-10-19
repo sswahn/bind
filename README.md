@@ -53,7 +53,7 @@ Usage:
 const BoundComponent = bind('count', MyComponent)
 ```
 ### Access State From Provider
-`provider()`  
+`provider(type)`  
 
 Provides a unbound component access to state.  
 
