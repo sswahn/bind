@@ -17,7 +17,7 @@ export const provider = (type = undefined) => {
   if (type && !Object.keys(state).includes(type)) {
     return console.error(`Provider argument ${type} is not found in current state.`)
   }
-  return {context: type ? {...state[type]} : {...state}, dispatch} 
+  return {context: type ? {[type]: state[type]} : {...state}, dispatch} 
 }
   
 const dispatch = action => {
