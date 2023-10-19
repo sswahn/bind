@@ -59,7 +59,7 @@ Provides a unbound component access to state.
 
 Usage:
 ```javascript
-const { context, dispatch } = provider()
+const { context, dispatch } = provider('count')
 ```
 
  ### Create An HTML Element
