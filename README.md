@@ -52,6 +52,15 @@ Usage:
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
+### Access State From Provider
+`provider()`  
+
+Provides a unbound component access to state.  
+
+Usage:
+```javascript
+const { context, dispatch } = provider()
+```
 
  ### Create An HTML Element
 `html(type, attributes, children)`  
