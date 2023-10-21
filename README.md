@@ -78,7 +78,7 @@ onUpdate(element, () => {
  ### Create An HTML Element
 `html(type, attributes, children)`  
 
-A utility function to create DOM elements.
+A utility function to create DOM elements and event delegation.
 
 Parameters:  
   · **type**: The type of DOM element to create (e.g., "div", "span").  
