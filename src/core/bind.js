@@ -2,9 +2,11 @@ let state = {}
 const queue = new Map()
 const subscribers = new Map()
 const components = new WeakMap()
+const updates = new WeakMap()
 const observables = new WeakMap()
 
 // TODO: throw errors instead of logging
+// implement event delegation
 
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
@@ -70,14 +72,12 @@ const notifySubscribers = type => {
   }
 }
 
-const updates = new WeakMap()
-
 export const onUpdate = (element, fn) => {
   if (!(element instanceof Element)) {
-    throw new Error('TypeError: onUpdate expects first argument to be an instance of Element.')
+    return console.error('TypeError: onUpdate expects first argument to be an instance of Element.')
   }
   if (typeof fn !== 'function') {
-    throw new Error('TypeError: onUpdate expects second argument to be a of type function')
+    return console.error('TypeError: onUpdate expects second argument to be a of type function')
   }
   updates.set(element, fn)
 }
