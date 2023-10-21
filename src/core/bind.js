@@ -10,21 +10,21 @@ const handlersRegistry = new Map()
 
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
-    return console.error('TypeError: createStore argument must be an object literal.')
+    throw new TypeError('createStore: argument must be an object literal.')
   }
   state = {...initialState}
 }
 
 export const provider = (type = undefined) => {
   if (type && !Object.keys(state).includes(type)) {
-    return console.error(`Provider argument ${type} is not found in current state.`)
+    throw new ReferenceError(`provider: argument ${type} is not found in current state.`)
   }
   return {context: type ? {[type]: state[type]} : {...state}, dispatch} 
 }
   
 const dispatch = action => {
   if (typeof action !== 'object' || Array.isArray(action)) {
-    return console.error('TypeError: dispatch argument must be an object literal.')
+    throw new TypeError('dispatch: argument must be an object literal.')
   }
   if (!action.hasOwnProperty('type')) {
     return console.error('Dispatch actions must have a property of "type".')
