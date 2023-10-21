@@ -70,12 +70,28 @@ const notifySubscribers = type => {
   }
 }
 
+const updates = new WeakMap()
+
+export const onUpdate = (element, fn) => {
+  if (!(element instanceof Element)) {
+    throw new Error('TypeError: onUpdate expects first argument to be an instance of Element.')
+  }
+  if (typeof fn !== 'function') {
+    throw new Error('TypeError: onUpdate expects second argument to be a of type function')
+  }
+  updates.set(element, fn)
+}
+
 const handleNotification = (item, type) => {
   try {
     const { component, parameters } = item
     const liveNode = components.get(component)
     const newElement = component({context: {[type]: state[type]}, dispatch, params: parameters})
     liveNode.parentNode.replaceChild(newElement, liveNode)
+    if (updates.has(newElement)) {
+      const update = updates.get(newElement)
+      update()
+    }
     components.set(component, newElement)
   } catch (error) {
     console.error(`Error notifying subscribers: ${error}.`)
