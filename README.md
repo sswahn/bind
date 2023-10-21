@@ -62,6 +62,19 @@ Usage:
 const { context, dispatch } = provider('count')
 ```
 
+### onUpdate Hook
+`onUpdate(element, callback)`
+
+A lifecycle hook to perform operations after a component is rendered.  
+
+Usage:
+```javascript
+const element = html('div')
+onUpdate(element, () => {
+  console.log('Fires post render.')
+})
+```
+
  ### Create An HTML Element
 `html(type, attributes, children)`  
 
