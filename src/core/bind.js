@@ -80,6 +80,7 @@ export const onUpdate = (element, fn) => {
     return console.error('TypeError: onUpdate expects second argument to be a of type function')
   }
   updates.set(element, fn)
+  return element
 }
 
 const handleNotification = (item, type) => {
