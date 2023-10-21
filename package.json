@@ -1,6 +1,6 @@
 {
   "name": "@sswahn/bind",
-  "version": "1.0.0-beta.15",
+  "version": "1.0.0-beta.16",
   "license": "MIT",
   "description": "Bind is a lightweight JavaScript framework designed for managing state and connecting components to state changes.",
   "type": "module",
@@ -12,19 +12,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/sswahn/bind"
-  },
-  "scripts": {
-    "test": "jest"
-  },
-  "dependencies": {
-    
-  },
-  "devDependencies": {
-    "jest": "^29.x.x",
-    "jest-environment-jsdom": "^29.x.x"
-  },
-  "jest": {
-    "testEnvironment": "jest-environment-jsdom",
-    "testMatch": ["<rootDir>/test/**/*.test.js"]
   }
 }
