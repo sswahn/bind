@@ -27,16 +27,16 @@ const dispatch = action => {
     throw new TypeError('dispatch: argument must be an object literal.')
   }
   if (!action.hasOwnProperty('type')) {
-    return console.error('Dispatch actions must have a property of "type".')
+    throw new SyntaxError('dispatch: actions must have a property of "type".')
   }
   if (!action.hasOwnProperty('payload')) {
-    return console.error('Dispatch actions must have a property of "payload".')
+    throw new SyntaxError('dispatch: actions must have a property of "payload".')
   }
   if (typeof action.payload === 'function') {
-    return console.error('TypeError: dispatched action payload cannot be a function.')
+    throw new TypeError('dispatched: action payload cannot be a function.')
   }
   if (!Object.keys(state).includes(action.type)) {
-    return console.error(`Dispatched action type ${action.type} is not found in current state.`)
+    throw new ReferenceError(`dispatched: action type ${action.type} is not found in current state.`)
   }
   const key = queue.size + 1
   queue.set(key, action)
@@ -55,7 +55,7 @@ const processQueue = key => {
     queue.delete(key)
     continueProcessingQueue(key)
   } catch (error) {
-    console.error(`Error processing queue: ${error}.`)
+    throw new Error(`Error processing queue: ${error}.`)
   }
 }
 
@@ -68,16 +68,16 @@ const notifySubscribers = type => {
     const array = subscribers.get(type)
     array?.forEach(item => handleNotification(item, type))
   } catch (error) {
-    console.error(`Error notifying subscribers: ${error}.`)
+    throw new Error(`Error notifying subscribers: ${error}.`)
   }
 }
 
 export const onUpdate = (element, fn) => {
   if (!(element instanceof Element)) {
-    return console.error('TypeError: onUpdate expects first argument to be an instance of Element.')
+    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
   }
   if (typeof fn !== 'function') {
-    return console.error('TypeError: onUpdate expects second argument to be a of type function')
+    throw new TypeError('onUpdate: expects second argument to be a of type function')
   }
   updates.set(element, fn)
   return element
@@ -95,7 +95,7 @@ const handleNotification = (item, type) => {
     }
     components.set(component, newElement)
   } catch (error) {
-    console.error(`Error notifying subscribers: ${error}.`)
+    throw new Error(`Error notifying subscribers: ${error}.`)
   }
 }
 
@@ -120,10 +120,10 @@ const processBatch = () => {
 
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
-    return console.error('TypeError: bind function first argument must be a string.')
+    throw new TypeError('bind: function first argument must be a string.')
   }
   if (typeof component !== 'function') {
-    return console.error('TypeError: bind function second argument must be a function.')
+    throw new TypeError('bind: function second argument must be a function.')
   }
   return (...parameters) => {
     const existing = subscribers.get(type) || []
@@ -145,7 +145,7 @@ const unbind = (type, component) => {
     const filtered = subscription.filter(item => item.component !== component)
     subscribers.set(type, filtered)
   } catch (error) {
-    console.error(`Error unbinding component: ${error}.`)
+    throw new Error(`Error unbinding component: ${error}.`)
   }
 }
 
@@ -218,10 +218,10 @@ const removeEventHandlers = element => {
 
 const observe = (element, type, component) => {
   if (!(element instanceof Element)) {
-    return console.error('Bound components must return instances of Element.')
+    throw new TypeError('Bound components must return instances of Element.')
   }
   if (observables.get(element)) {
-    return console.warn(`Element already being observed: ${element}`)
+    return
   }
   observables.set(element, true)
   const observer = new MutationObserver(mutations => {
@@ -232,7 +232,7 @@ const observe = (element, type, component) => {
         removeEventHandlers(element)
         observables.delete(element)
         observer.disconnect()
-        return console.log(`Node unbound, unobserved: ${node}`)
+        return
       }
     }
   })
