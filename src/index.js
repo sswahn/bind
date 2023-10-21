@@ -1,2 +1,1 @@
-export {createStore, bind, provider, onUpdate} from './core/bind.js'
-export {html} from './core/dom.js'
+export {createStore, bind, provider, html, onUpdate} from './core/bind.js'
