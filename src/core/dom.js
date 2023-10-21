@@ -1,3 +1,17 @@
+const handlersRegistry = new Map()
+
+const delegateEventHandling = event => {
+  const target = event.target
+  const eventHandlers = handlersRegistry.get(event.type)
+  if (eventHandlers) {
+    for (const [elem, handler] of eventHandlers.entries()) {
+      if (target === elem || elem.contains(target)) {
+        handler(event)
+      }
+    }
+  }
+}
+
 export const html = (type, attributes = {}, children = []) => {
   if (typeof type !== 'string') {
     return console.error('TypeError: html first argument must be a string.')
@@ -11,7 +25,12 @@ export const html = (type, attributes = {}, children = []) => {
   const element = document.createElement(type)
   Object.entries(attributes).forEach(([key, value]) => {
     if (key.startsWith('on') && typeof value === 'function') {
-      element[key.toLowerCase()] = value
+      const eventType = key.slice(2).toLowerCase()
+      if (!handlersRegistry.has(eventType)) {
+        handlersRegistry.set(eventType, new Map())
+        document.body.addEventListener(eventType, delegateEventHandling)
+      }
+      handlersRegistry.get(eventType).set(element, value)
     } else if (key === 'textContent') {
       element.textContent = value
     } else {
