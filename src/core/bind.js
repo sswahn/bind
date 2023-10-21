@@ -149,8 +149,6 @@ const unbind = (type, component) => {
   }
 }
 
-const nonBubblingEvents = ['change', 'error', 'load', 'mouseenter', 'mouseleave', 'reset', 'scroll', 'unload']
-
 const delegateEventHandling = event => {
   const target = event.target
   const eventHandlers = handlersRegistry.get(event.type)
@@ -162,6 +160,8 @@ const delegateEventHandling = event => {
     }
   }
 }
+
+const nonBubblingEvents = ['change', 'error', 'load', 'mouseenter', 'mouseleave', 'reset', 'scroll', 'unload']
 
 export const html = (type, attributes = {}, children = []) => {
   if (typeof type !== 'string') {
