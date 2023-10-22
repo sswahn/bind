@@ -38,7 +38,7 @@ dispatch({ type: 'count', payload: 1 })
 ```  
 
 ### Bind State  
-Binds a component to state changes.  
+Binds a component to a specific state change.  
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
