@@ -13,7 +13,7 @@ The framework provides core utilities to:
 ## Documentation  
 ### Import
 ```javascript
-import {createStore, bind, html, provider, onUpdate} from '@sswahn/bind'
+import {createStore, bind, html, onUpdate} from '@sswahn/bind'
 ```  
 
 ### Create State  
@@ -41,12 +41,6 @@ dispatch({ type: 'count', payload: 1 })
 Binds a component to a specific state change.  
 ```javascript
 const BoundComponent = bind('count', MyComponent)
-```
-
-### Provider  
-Provides a unbound component access to the state.  
-```javascript
-const { context, dispatch } = provider('count')
 ```  
 
 ### onUpdate Hook  
