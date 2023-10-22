@@ -28,17 +28,13 @@ createStore({
 ### Get State  
 Bound components have access to the context parameter. It provides a copy of the current bound state.  
 ```javascript
-const Counter = ({ context }) => {
-  context.count
-  ...
+context.count
 ```  
 
 ### Update State  
 Bound components have access to the dispatch parameter. It dispatches an action to the store.  
 ```javascript
-const Button = ({ context, dispatch }) => {
-  dispatch({ type: 'count', payload: 1 })
-  ...
+dispatch({ type: 'count', payload: 1 })
 ```  
 
 ### Bind A Component To State  
