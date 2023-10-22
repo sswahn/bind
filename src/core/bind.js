@@ -6,6 +6,12 @@ const updates = new WeakMap()
 const observables = new WeakMap()
 const handlersRegistry = new Map()
 
+/* TODO:
+Unused Variables: The components, updates, and observables seem to be WeakMaps but don't have clear deletion logic, 
+and their purpose isn't very clear without documentation or usage context. 
+Make sure to handle their lifecycles properly.
+*/
+
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     throw new TypeError('createStore: argument must be an object literal.')
