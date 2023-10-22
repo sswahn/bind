@@ -33,7 +33,7 @@ const dispatch = action => {
   if (typeof action.payload === 'function') {
     throw new TypeError('dispatched: action payload cannot be a function.')
   }
-  if (!Object.keys(state).includes(action.type)) {
+  if (!state.hasOwnProperty(action.type)) {
     throw new ReferenceError(`dispatched: action type ${action.type} is not found in current state.`)
   }
   const key = queue.size + 1
