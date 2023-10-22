@@ -97,6 +97,13 @@ const handleNotification = (item, type) => {
   }
 }
 
+/*TODO:
+  processBatch needs to notify subscribers
+  might need to make a batchNotifySubscribers function
+  
+  notifySubscribers(type)
+*/
+
 const continueProcessingQueue = key => {
   const size = queue.size
   if (size >= 10) {
