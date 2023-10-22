@@ -13,7 +13,7 @@ The framework provides core utilities to:
 ## Documentation  
 ### Import
 ```javascript
-import { createStore, bind, html, provider, onUpdate } from '@sswahn/bind'
+import {createStore, bind, html, provider, onUpdate} from '@sswahn/bind'
 ```  
 
 ### Create State  
