@@ -10,6 +10,10 @@ The framework provides core utilities to:
   · Render DOM elements and components  
 
 ## Documentation  
+Import library
+```javascript
+import {bind 
+```
 ### Create State
 `createStore(initialState)`  
 
@@ -47,7 +51,7 @@ const BoundComponent = bind('count', MyComponent)
 ### Access State From Provider
 `provider(type)`  
 
-Provides a unbound component access to state.  
+Provides a unbound component access to the state.  
 ```javascript
 const { context, dispatch } = provider('count')
 ```
@@ -138,5 +142,5 @@ const Display = ({ context }) => {
 
 export default bind('counter', Display)
 ```
-## Licence
+## License
 Bind is [MIT Licensed](https://github.com/sswahn/bind/blob/main/LICENSE)
