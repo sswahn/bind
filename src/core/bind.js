@@ -6,8 +6,6 @@ const updates = new WeakMap()
 const observables = new WeakMap()
 const handlersRegistry = new Map()
 
-// TODO: throw new TypeErrors() instead of logging
-
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     throw new TypeError('createStore: argument must be an object literal.')
