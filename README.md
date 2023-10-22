@@ -10,7 +10,7 @@ The framework provides core utilities to:
   · Render DOM elements and components  
 
 ## Documentation  
-Import library
+Import library.
 ```javascript
 import { createStore, bind, html, provider, onUpdate } from '@sswahn/bind'
 ```  
