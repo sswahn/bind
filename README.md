@@ -37,13 +37,13 @@ Bound components have access to the dispatch parameter. It dispatches an action 
 dispatch({ type: 'count', payload: 1 })
 ```  
 
-### Bind A Component To State  
+### Bind State  
 Binds a component to state changes.  
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
 
-### Access State From Provider  
+### Provider  
 Provides a unbound component access to the state.  
 ```javascript
 const { context, dispatch } = provider('count')
