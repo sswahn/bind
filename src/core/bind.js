@@ -97,16 +97,9 @@ const handleNotification = (item, type) => {
   }
 }
 
-/*TODO:
-  processBatch needs to notify subscribers
-  might need to make a batchNotifySubscribers function
-  
-  notifySubscribers(type)
-*/
-
 const continueProcessingQueue = key => {
   const size = queue.size
-  if (size >= 10) {
+  if (size >= 5) {
     return processBatch()
   } 
   if (size > 0) {
@@ -121,6 +114,9 @@ const processBatch = () => {
     queue.delete(key)
   })
   state = {...state, ...batch}
+  Object.keys(batch).forEach(type => {
+    notifySubscribers(type)
+  })
 }
 
 export const bind = (type, component) => {
