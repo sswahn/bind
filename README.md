@@ -12,8 +12,9 @@ The framework provides core utilities to:
 ## Documentation  
 Import library
 ```javascript
-import {bind 
-```
+import { createStore, bind, html, provider, onUpdate } from '@sswahn/bind'
+```  
+
 ### Create State
 `createStore(initialState)`  
 
@@ -23,7 +24,7 @@ createStore({
   count: 0,
   user: null
 })
-```
+```  
 
 ### Get State
 `context`  
@@ -31,7 +32,7 @@ createStore({
 Provides a copy of the current bound state.  
 ```javascript
 context.count
-```
+```  
 
 ### Update State
 `dispatch(action)`  
@@ -39,7 +40,7 @@ context.count
 Dispatches an action to the store.  
 ```javascript
 dispatch({ type: 'count', payload: 1 })
-```
+```  
 
 ### Bind A Component To State
 `bind(type, component)`  
@@ -48,13 +49,14 @@ Binds a component to state changes.
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
+
 ### Access State From Provider
 `provider(type)`  
 
 Provides a unbound component access to the state.  
 ```javascript
 const { context, dispatch } = provider('count')
-```
+```  
 
 ### onUpdate Hook
 `onUpdate(element, callback)`
@@ -65,7 +67,7 @@ const element = html('div')
 onUpdate(element, () => {
   console.log('Fires post render.')
 })
-```
+```  
 
  ### Create An HTML Element
 `html(type, attributes, children)`  
@@ -80,7 +82,7 @@ Parameters:
 const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
   html('span', {}, ['Child span'])
 ])
-```
+```  
 
 ## Example
 ```javascript
@@ -142,5 +144,6 @@ const Display = ({ context }) => {
 
 export default bind('counter', Display)
 ```
+
 ## License
 Bind is [MIT Licensed](https://github.com/sswahn/bind/blob/main/LICENSE)
