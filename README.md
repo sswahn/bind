@@ -15,9 +15,7 @@ The framework provides core utilities to:
 import { createStore, bind, html, provider, onUpdate } from '@sswahn/bind'
 ```  
 
-### Create State
-`createStore(initialState)`  
-
+### Create State  
 Used to create a new store with the given initial state.  
 ```javascript
 createStore({
@@ -26,41 +24,31 @@ createStore({
 })
 ```  
 
-### Get State
-`context`  
-
+### Get State  
 Bound components have access to the context parameter. It provides a copy of the current bound state.  
 ```javascript
 context.count
 ```  
 
-### Update State
-`dispatch(action)`  
-
+### Update State  
 Bound components have access to the dispatch parameter. It dispatches an action to the store.  
 ```javascript
 dispatch({ type: 'count', payload: 1 })
 ```  
 
-### Bind A Component To State
-`bind(type, component)`  
-
+### Bind A Component To State  
 Binds a component to state changes.  
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
 
-### Access State From Provider
-`provider(type)`  
-
+### Access State From Provider  
 Provides a unbound component access to the state.  
 ```javascript
 const { context, dispatch } = provider('count')
 ```  
 
-### onUpdate Hook
-`onUpdate(element, callback)`
-
+### onUpdate Hook  
 A lifecycle hook to perform operations after a component is rendered.  
 ```javascript
 const element = html('div')
@@ -69,9 +57,7 @@ onUpdate(element, () => {
 })
 ```  
 
- ### Create An HTML Element
-`html(type, attributes, children)`  
-
+ ### Create An HTML Element  
 A utility function to create DOM elements and event delegation.
 
 Parameters:  
