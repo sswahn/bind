@@ -13,9 +13,7 @@ The framework provides core utilities to:
 ### Create State
 `createStore(initialState)`  
 
-Used to create a new store with the given initial state.
-
-Usage:
+Used to create a new store with the given initial state.  
 ```javascript
 createStore({
   count: 0,
@@ -26,9 +24,7 @@ createStore({
 ### Get State
 `context`  
 
-Provides a copy of the current bound state.
-
-Usage:
+Provides a copy of the current bound state.  
 ```javascript
 context.count
 ```
@@ -36,9 +32,7 @@ context.count
 ### Update State
 `dispatch(action)`  
 
-Dispatches an action to the store.
-
-Usage:
+Dispatches an action to the store.  
 ```javascript
 dispatch({ type: 'count', payload: 1 })
 ```
@@ -46,9 +40,7 @@ dispatch({ type: 'count', payload: 1 })
 ### Bind A Component To State
 `bind(type, component)`  
 
-Binds a component to state changes.
-
-Usage:
+Binds a component to state changes.  
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```
@@ -56,8 +48,6 @@ const BoundComponent = bind('count', MyComponent)
 `provider(type)`  
 
 Provides a unbound component access to state.  
-
-Usage:
 ```javascript
 const { context, dispatch } = provider('count')
 ```
@@ -66,8 +56,6 @@ const { context, dispatch } = provider('count')
 `onUpdate(element, callback)`
 
 A lifecycle hook to perform operations after a component is rendered.  
-
-Usage:
 ```javascript
 const element = html('div')
 onUpdate(element, () => {
@@ -84,8 +72,6 @@ Parameters:
   · **type**: The type of DOM element to create (e.g., "div", "span").  
   · **attributes**: An object of attributes to apply to the DOM element.  
   · **children**: An array of child nodes or text to append to the created element.  
-  
-Usage:
 ```javascript
 const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
   html('span', {}, ['Child span'])
