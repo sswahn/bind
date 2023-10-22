@@ -14,7 +14,7 @@ export const createStore = initialState => {
 }
 
 export const provider = (type = undefined) => {
-  if (type && !Object.keys(state).includes(type)) {
+  if (type && !state.hasOwnProperty(type)) {
     throw new ReferenceError(`provider: argument ${type} is not found in current state.`)
   }
   return {context: type ? {[type]: state[type]} : {...state}, dispatch} 
