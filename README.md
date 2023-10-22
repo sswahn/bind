@@ -8,6 +8,7 @@ The framework provides core utilities to:
   · Dispatch actions to update the state  
   · Bind components to state changes and auto-update them  
   · Render DOM elements and components  
+  · Event delegation
 
 ## Documentation  
 ### Import
