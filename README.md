@@ -29,7 +29,7 @@ createStore({
 ### Get State
 `context`  
 
-Provides a copy of the current bound state.  
+Bound components have access to the context parameter. It provides a copy of the current bound state.  
 ```javascript
 context.count
 ```  
@@ -37,7 +37,7 @@ context.count
 ### Update State
 `dispatch(action)`  
 
-Dispatches an action to the store.  
+Bound components have access to the dispatch parameter. It dispatches an action to the store.  
 ```javascript
 dispatch({ type: 'count', payload: 1 })
 ```  
