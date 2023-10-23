@@ -119,6 +119,8 @@ const processBatch = () => {
   })
 }
 
+// TODO: handle if component is a DocumentFragment
+
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
     throw new TypeError('bind: function first argument must be a string.')
@@ -216,6 +218,8 @@ const removeEventHandlers = element => {
     }
   }
 }
+
+// TODO: handle if element is a DocumentFragment
 
 const observe = (element, type, component) => {
   if (!(element instanceof Element)) {
