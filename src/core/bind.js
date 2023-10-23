@@ -221,14 +221,14 @@ const removeEventHandlers = element => {
   }
 }
 
-// TODO: handle if element is a DocumentFragment
-
 const observe = (element, type, component) => {
   if (!(element instanceof Element) || !(element instanceof DocumentFragment)) {
     throw new TypeError('Bound components must return instances of Element or DocumentFragment.')
   }
 
-  // need to handle DocumentFragment
+  if (element instanceof DocumentFragment) {
+    element.children.forEach(child => observables.set(child, true))
+  }
   
   if (observables.get(element)) {
     return
