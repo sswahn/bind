@@ -86,6 +86,9 @@ const handleNotification = (item, type) => {
     const { component, parameters } = item
     const liveNode = components.get(component)
     const newElement = component({context: {[type]: state[type]}, dispatch, params: parameters})
+    if (!newElement) {
+      return
+    }
     liveNode.parentNode.replaceChild(newElement, liveNode)
     if (updates.has(newElement)) {
       const update = updates.get(newElement)
@@ -132,9 +135,10 @@ export const bind = (type, component) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
     const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
-    if (element) {
-      observe(element, type, component) 
+    if (!element) {
+      return
     }
+    observe(element, type, component) 
     if (updates.has(element)) {
       const update = updates.get(element)
       update()
