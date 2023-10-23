@@ -192,7 +192,9 @@ export const html = (type, attributes = {}, children = []) => {
     }
   })
   const nodes = children.map(child => {
-    if (child instanceof Node) {
+    if (!child) {
+      return document.createDocumentFragment()
+    } else if (child instanceof Node) {
       return child
     } else if (typeof child === 'string') {
       return document.createTextNode(child)
