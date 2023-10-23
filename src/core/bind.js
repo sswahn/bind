@@ -132,7 +132,9 @@ export const bind = (type, component) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
     const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
-    observe(element, type, component) 
+    if (element) {
+      observe(element, type, component) 
+    }
     if (updates.has(element)) {
       const update = updates.get(element)
       update()
@@ -222,9 +224,12 @@ const removeEventHandlers = element => {
 // TODO: handle if element is a DocumentFragment
 
 const observe = (element, type, component) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('Bound components must return instances of Element.')
+  if (!(element instanceof Element) || !(element instanceof DocumentFragment)) {
+    throw new TypeError('Bound components must return instances of Element or DocumentFragment.')
   }
+
+  // need to handle DocumentFragment
+  
   if (observables.get(element)) {
     return
   }
