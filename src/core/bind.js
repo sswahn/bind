@@ -215,7 +215,6 @@ const removeEventHandlers = element => {
     }
   }
 }
-
 const observe = (element, type, component) => {
   if (!(element instanceof Element) && !(element instanceof DocumentFragment)) {
     throw new TypeError('Bound components must return instances of Element or DocumentFragment.')
@@ -223,14 +222,12 @@ const observe = (element, type, component) => {
   if (observables.get(element)) {
     return
   }
-  
   const nodesToObserve = element instanceof DocumentFragment ? Array.from(element.childNodes) : [element]
   nodesToObserve.forEach(node => {
     if (!observables.get(node)) {
       observables.set(node, true);
     }
   })
-  
   const observer = new MutationObserver(mutations => {
     const removed = mutations.map(mutation => mutation.removedNodes).flat()
     for (let node of removed) {                                               // need to handle nested children in fragment?
