@@ -222,31 +222,41 @@ const removeEventHandlers = element => {
 }
 
 const observe = (element, type, component) => {
-  if (!(element instanceof Element) || !(element instanceof DocumentFragment)) {
+  if (!(element instanceof Element) && !(element instanceof DocumentFragment)) {
     throw new TypeError('Bound components must return instances of Element or DocumentFragment.')
   }
-
-  if (element instanceof DocumentFragment) {
-    element.children.forEach(child => observables.set(child, true))
-  }
-  
   if (observables.get(element)) {
     return
   }
-  observables.set(element, true)
+  
+  const nodesToObserve = element instanceof DocumentFragment ? Array.from(element.childNodes) : [element]
+  nodesToObserve.forEach(node => {
+    if (!observables.get(node)) {
+      observables.set(node, true);
+    }
+  })
+  
   const observer = new MutationObserver(mutations => {
     const removed = mutations.map(mutation => mutation.removedNodes).flat()
     for (let node of removed) {
       if (node === element) {
-        unbind(type, component)
-        removeEventHandlers(element)
-        components.delete(component)
-        updates.delete(element)
-        observables.delete(element)
+        cleanup(type, component, node)
         observer.disconnect()
         return
       }
     }
   })
   observer.observe(document.body, {childList: true, subtree: true})
+}
+
+const cleanup = (type, component, node) => {
+  try {
+    unbind(type, component)
+    removeEventHandlers(node)
+    components.delete(component)
+    updates.delete(node)
+    observables.delete(node)
+  } catch (error) {
+    throw new Error(`Error during observer cleanup process: ${error}`)
+  }
 }
