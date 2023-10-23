@@ -80,7 +80,7 @@ const handleNotification = (item, type) => {
     const liveNode = components.get(component)
     const newElement = component({context: {[type]: state[type]}, dispatch, params: parameters})
     if (!newElement) {
-      return
+      return document.createDocumentFragment()
     }
     liveNode.parentNode.replaceChild(newElement, liveNode)
     if (updates.has(newElement)) {
@@ -127,7 +127,7 @@ export const bind = (type, component) => {
     subscribers.set(type, [...existing, {component, parameters}])
     const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
     if (!element) {
-      return
+      return document.createDocumentFragment()
     }
     observe(element, type, component) 
     if (updates.has(element)) {
