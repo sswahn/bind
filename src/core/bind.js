@@ -12,14 +12,6 @@ export const createStore = initialState => {
   }
   state = {...initialState}
 }
-
-/*
-export const provider = (type = undefined) => {
-  if (type && !state.hasOwnProperty(type)) {
-    throw new ReferenceError(`provider: argument ${type} is not found in current state.`)
-  }
-  return {context: type ? {[type]: state[type]} : {...state}, dispatch} 
-}*/
   
 const dispatch = action => {
   if (typeof action !== 'object' || Array.isArray(action)) {
@@ -122,8 +114,6 @@ const processBatch = () => {
     notifySubscribers(type)
   })
 }
-
-// TODO: handle if component is a DocumentFragment
 
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
