@@ -44,7 +44,7 @@ const BoundComponent = bind('count', MyComponent)
 ```  
 
 ### Hooks  
-Lifecycle hooks to perform operations after initial mounting, updating, and unmounting.  
+Access lifecycle hooks to perform operations with the mount, update, and unmount methods.  
 ```javascript
 const element = html('div')
 const mount = () => console.log('component mounted.')
