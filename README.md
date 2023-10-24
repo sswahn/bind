@@ -1,14 +1,31 @@
 # Bind
 Bind is a minimalistic, state-driven UI framework designed for developers who need a reactive web component model without the overhead of larger frameworks. With features such as lifecycle hooks, efficient event delegation, and a centralized state store, Bind bridges the gap between simplicity and functionality, making it ideal for single-page applications and complex web components alike.
 
-## Overview
-The framework provides core utilities to:
+## Features
 
-  · Create a centralized state store  
-  · Dispatch actions to update the state  
-  · Bind components to state changes and auto-update them  
-  · Render DOM elements and components  
-  · Event delegation
+- **Centralized State Management**: 
+  - Maintain a single source of truth with a well-structured centralized state store.
+- **Reactive Components**: 
+  - Components react automatically to state changes without manual intervention.
+- **Efficient Event Delegation**: 
+  - Utilize event delegation techniques to manage events efficiently without attaching individual event listeners to every element.
+- **Lifecycle Hooks**: 
+  - Access and utilize component lifecycle methods like `mount`, `update`, and `unmount` for fine-grained control.
+- **Declarative UI**: 
+  - Easily create web components with the `html` utility function, ensuring a clean and descriptive UI design.
+- **Easy State Binding**: 
+  - Use the `bind` function to connect components to specific parts of your state, allowing them to automatically react to changes in that state.
+- **Batched State Updates**: 
+  - Process multiple state updates in batches, optimizing rendering and reducing unnecessary component re-renders.
+- **DOM Rendering & Update**: 
+  - The `render` method allows seamless DOM rendering, and components auto-update in response to state changes.
+- **Minimalistic & Lightweight**: 
+  - Built with performance and simplicity in mind, Bind adds minimal overhead to projects.
+- **Mutation Observers**: 
+  - Keep track of DOM changes efficiently and clean up resources when elements are removed.
+- **Event Handlers Cleanup**: 
+  - Automatically manage and clean up event handlers, preventing memory leaks and ensuring optimal performance.
+
 
 ## Documentation  
 ### Import
