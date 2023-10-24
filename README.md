@@ -20,8 +20,7 @@ import {createStore, render, bind, html, hooks} from '@sswahn/bind'
 Used to create a new store with the given initial state.  
 ```javascript
 createStore({
-  count: 0,
-  user: null
+  count: 0
 })
 ```  
 
