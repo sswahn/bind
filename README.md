@@ -21,8 +21,8 @@ Install `bind` using npm:
 
 ```bash  
 npm install @sswahn/bind --save  
+```
 
-  
 ## Documentation  
 ### Import
 ```javascript
