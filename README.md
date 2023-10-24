@@ -13,7 +13,7 @@ The framework provides core utilities to:
 ## Documentation  
 ### Import
 ```javascript
-import {createStore, bind, html, onUpdate} from '@sswahn/bind'
+import {createStore, render, bind, html, hooks} from '@sswahn/bind'
 ```  
 
 ### Create State  
@@ -43,13 +43,20 @@ Binds a component to a specific state change.
 const BoundComponent = bind('count', MyComponent)
 ```  
 
-### onUpdate Hook  
-A lifecycle hook to perform operations after a component is re-rendered.  
+### Hooks  
+Lifecycle hooks to perform operations after initial mounting, updating, and unmounting.  
 ```javascript
 const element = html('div')
-onUpdate(element, () => {
-  console.log('Fires post render.')
-})
+const mount = () => console.log('component mounted.')
+const update = () => console.log('component updated.')
+const unmount = () => console.log('component unmounted.')
+hooks(element, {mount, update, unmount})
+```
+
+### Render App  
+Used to create a new store with the given initial state.  
+```javascript
+render(component(), document.getElementBy('root'))
 ```  
 
  ### Create An HTML Element  
@@ -68,11 +75,11 @@ const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
 ## Example
 ```javascript
 // index.js
-import { createStore } from '@sswahn/bind'
+import { createStore, render } from '@sswahn/bind'
 import Counter from './Counter'
 
 createStore({ counter: 0 })
-document.getElementById('root').appendChild(Counter())
+render(Counter(), document.getElementById('root'))
 ```
 ```javascript
 // Counter.js
