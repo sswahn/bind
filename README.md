@@ -17,14 +17,10 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 
 ## Installation
 
-If Bind is published on npm, you can easily install it using the npm or yarn command. Ensure you have [Node.js](https://nodejs.org/) installed before following the instructions below.
+Install `bind` using npm:  
 
-### Using npm
-
-Install `bind` using npm:
-
-```bash
-npm install @sswahn/bind --save
+```bash  
+npm install @sswahn/bind --save  
 
   
 ## Documentation  
