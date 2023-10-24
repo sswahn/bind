@@ -245,22 +245,17 @@ const removeEventHandlers = element => {
     }
   }
 }
+
 const observe = (element, type, component) => {
-  if (!(element instanceof Element) && !(element instanceof DocumentFragment)) {
+  if (!(element instanceof Element) || !(element instanceof DocumentFragment)) {
     throw new TypeError('Bound components must return instances of Element or DocumentFragment.')
   }
   if (observables.get(element)) {
     return
   }
-  const nodesToObserve = element instanceof DocumentFragment ? Array.from(element.childNodes) : [element]
-  nodesToObserve.forEach(node => {
-    if (!observables.get(node)) {
-      observables.set(node, true);
-    }
-  })
   const observer = new MutationObserver(mutations => {
     const removed = mutations.map(mutation => mutation.removedNodes).flat()
-    for (let node of removed) {                                              
+    for (let node of removed) {
       if (node === element) {
         cleanup(type, component, node)
         observer.disconnect()
@@ -268,11 +263,17 @@ const observe = (element, type, component) => {
       }
     }
   })
-  observer.observe(document.body, {childList: true, subtree: true})
-
-  if (element.childNodes && element.childNodes.length) {
-    element.childNodes.forEach(childNode => observe(childNode, type, component))
-  }
+  observer.observe(document.body, { childList: true, subtree: true })
+  observables.set(element, true)
+  const nodesToObserve = element instanceof DocumentFragment ? Array.from(element.childNodes) : [element]
+  nodesToObserve.forEach(node => {
+    if (!observables.get(node)) {
+      observables.set(node, true)
+      if (node.childNodes && node.childNodes.length) {
+        observe(node, type, component)
+      }
+    }
+  })
 }
 
 const cleanup = (type, component, node) => {
