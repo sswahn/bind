@@ -88,7 +88,7 @@ hooks(element, {
 
 export const hooks = (element, hook) => {
   if (!(element instanceof Element)) {
-    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
+    throw new TypeError('hooks: expects first argument to be an instance of Element.')
   }
   if (typeof hook !== 'object' || Array.isArray(hook)) {
     throw new TypeError('hooks: second argument must be an object literal.')
