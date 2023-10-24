@@ -44,7 +44,7 @@ const BoundComponent = bind('count', MyComponent)
 ```  
 
 ### onUpdate Hook  
-A lifecycle hook to perform operations after a component is rendered.  
+A lifecycle hook to perform operations after a component is re-rendered.  
 ```javascript
 const element = html('div')
 onUpdate(element, () => {
