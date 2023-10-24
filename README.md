@@ -1,5 +1,5 @@
 # Bind
-Bind is a lightweight JavaScript framework designed for managing state and connecting components to state changes.
+Bind is a lightweight, state-driven UI framework for reactive web components with lifecycle hooks and efficient event delegation.
 
 ## Overview
 The framework provides core utilities to:
