@@ -102,7 +102,6 @@ render(Counter(), document.getElementById('root'))
 The main component, `Counter`, composes a Button and a Display to provide a user interface for our counter.  
 
 ```javascript
-// Counter.js
 import { html } from '@sswahn/bind'
 import Button from './Button'
 import Display from './Display'
@@ -126,7 +125,6 @@ export default Counter
 The `Button` component is responsible for incrementing the counter when clicked.  
 
 ```javascript
-// Button.js
 import { html, bind } from '@sswahn/bind'
 
 const Button = ({ context, dispatch }) => {
@@ -149,7 +147,6 @@ export default bind('counter', Button)
 The `Display` component simply shows the current value of our counter.  
 
 ```javascript
-// Display.js
 import { html, bind } from '@sswahn/bind'
 
 const Display = ({ context }) => {
