@@ -54,7 +54,7 @@ hooks(element, {mount, update, unmount})
 ```
 
 ### Render App  
-Used to create a new store with the given initial state.  
+Attaches the app to an existing dom root element.  
 ```javascript
 render(component(), document.getElementBy('root'))
 ```  
