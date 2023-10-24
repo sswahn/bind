@@ -2,7 +2,9 @@ let state = {}
 const queue = new Map()
 const subscribers = new Map()
 const components = new WeakMap()
+const mounts = new WeakMap()
 const updates = new WeakMap()
+const unmounts = new WeakMap()
 const observables = new WeakMap()
 const handlersRegistry = new Map()
 
@@ -61,6 +63,43 @@ const notifySubscribers = type => {
   } catch (error) {
     throw new Error(`Error notifying subscribers: ${error}.`)
   }
+}
+
+export const render = (component, root) => {
+  const element = root.appendChild(component)
+  element.children.forEach(child => {
+    if (updates.has(child)) {
+      const mount = mounts.get(child)
+      mount()
+    }
+  })
+  return element
+}
+
+// Lifestyle hooks
+
+// perhaps consolidate lifecycle into one function that fires at all stages of lifecycle like useEffect called: hook(el, fn)
+
+export const onMount = (element, fn) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
+  }
+  if (typeof fn !== 'function') {
+    throw new TypeError('onUpdate: expects second argument to be a of type function')
+  }
+  updates.set(element, fn)
+  return element
+}
+
+export const onUnmount = (element, fn) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
+  }
+  if (typeof fn !== 'function') {
+    throw new TypeError('onUpdate: expects second argument to be a of type function')
+  }
+  updates.set(element, fn)
+  return element
 }
 
 export const onUpdate = (element, fn) => {
