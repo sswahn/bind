@@ -20,46 +20,43 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 Using npm:  
 ```bash  
 npm install @sswahn/bind --save  
-```
-Using GitHub:  
-```bash  
-git clone https://github.com/sswahn/bind.git
-```
+```  
 
 ## Documentation  
-### Import
+### Importing Bind
+To get started, first import the necessary functions from `bind`.  
 ```javascript
 import {createStore, render, bind, html, hooks} from '@sswahn/bind'
 ```  
 
-### Create State  
-Used to create a new store with the given initial state.  
+### Initializing State  
+Set up your application's centralized state store using the `createStore` function.
 ```javascript
 createStore({
   count: 0
 })
 ```  
 
-### Get State  
-Bound components have access to the context parameter. It provides a copy of the current bound state.  
+### Accessing State  
+In any bound component, you can access the state through the `context` parameter. For instance, to get the value of `count`:
 ```javascript
-context.count
+const currentCount = context.count
 ```  
 
-### Update State  
-Bound components have access to the dispatch parameter. It dispatches an action to the store.  
+### Modifying State  
+To introduce changes to your state, make use of the `dispatch` function available in bound components. This function expects an action object with a `type` and `payload`.
 ```javascript
 dispatch({ type: 'count', payload: 1 })
 ```  
 
-### Bind State  
-Binds a component to a specific state change.  
+### Binding Components To State  
+Use the `bind` function to create a relationship between your component and a specific state property. When the specified state property changes, your component will automatically update.
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```  
 
-### Hooks  
-Access lifecycle hooks to perform operations with the mount, update, and unmount methods.  
+### Lifecycle Hooks  
+`bind` provides lifecycle hooks that you can use to perform specific operations during the lifecycle of your components, namely during mounting, updating, and unmounting. 
 ```javascript
 const element = html('div')
 const mount = () => console.log('component mounted.')
@@ -68,16 +65,15 @@ const unmount = () => console.log('component unmounted.')
 hooks(element, {mount, update, unmount})
 ```
 
-### Render App  
-Attaches the app to an existing dom root element.  
+### Render Components  
+To attach your application (or component) to the DOM, use the `render` function. This function expects the component and a DOM root element as its arguments.
 ```javascript
 render(component(), document.getElementBy('root'))
 ```  
 
- ### Create An HTML Element  
-A utility function to create DOM elements and event delegation.
+ ### Building HTML Elements  
+Use the `html` utility function to create and return DOM elements. It supports event delegation and can be nested to create complex structures.
 
-Parameters:  
   · **type**: The type of DOM element to create (e.g., "div", "span").  
   · **attributes**: An object of attributes to apply to the DOM element.  
   · **children**: An array of child nodes or text to append to the created element.  
