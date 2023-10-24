@@ -68,7 +68,7 @@ const notifySubscribers = type => {
 export const render = (component, root) => {
   const element = root.appendChild(component)
   element.children.forEach(child => {
-    if (updates.has(child)) {
+    if (mounts.has(child)) {
       const mount = mounts.get(child)
       mount()
     }
@@ -78,31 +78,23 @@ export const render = (component, root) => {
 
 // Lifestyle hooks
 
-// perhaps consolidate lifecycle into one function that fires at all stages of lifecycle like useEffect called: hooks(el, fn)
-
-export const onMount = (element, fn) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
-  }
-  if (typeof fn !== 'function') {
-    throw new TypeError('onUpdate: expects second argument to be a of type function')
-  }
-  updates.set(element, fn)
-  return element
+export const hooks = (element, { mount, update, unmount }) => {
+  if (mount) onMount(element, mount)
+  if (update) onUpdate(element, update)
+  if (unmount) onUnmount(element, unmount)
 }
 
-export const onUnmount = (element, fn) => {
+const onMount = (element, fn) => {
   if (!(element instanceof Element)) {
     throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
   }
   if (typeof fn !== 'function') {
     throw new TypeError('onUpdate: expects second argument to be a of type function')
   }
-  updates.set(element, fn)
-  return element
+  mounts.set(element, fn)
 }
 
-export const onUpdate = (element, fn) => {
+const onUpdate = (element, fn) => {
   if (!(element instanceof Element)) {
     throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
   }
@@ -110,7 +102,16 @@ export const onUpdate = (element, fn) => {
     throw new TypeError('onUpdate: expects second argument to be a of type function')
   }
   updates.set(element, fn)
-  return element
+}
+
+const onUnmount = (element, fn) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
+  }
+  if (typeof fn !== 'function') {
+    throw new TypeError('onUpdate: expects second argument to be a of type function')
+  }
+  unmounts.set(element, fn)
 }
 
 const handleNotification = (item, type) => {
@@ -279,13 +280,15 @@ const observe = (element, type, component) => {
 }
 
 const cleanup = (type, component, node) => {
-  try {
-    unbind(type, component)
-    removeEventHandlers(node)
-    components.delete(component)
-    updates.delete(node)
-    observables.delete(node)
-  } catch (error) {
-    throw new Error(`Error during observer cleanup process: ${error}`)
+  if (unmounts.has(child)) {
+    const unmount = unmounts.get(child)
+    unmount()
   }
+  unbind(type, component)
+  removeEventHandlers(node)
+  components.delete(component)
+  mounts.delete(node)
+  updates.delete(node)
+  unmounts.delete(node)
+  observables.delete(node)
 }
