@@ -65,8 +65,14 @@ const notifySubscribers = type => {
   }
 }
 
-export const render = (component, root) => {
-  const element = root.appendChild(component)
+export const render = (element, root) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('render: expects first argument to be an instance of Element.')
+  }
+  if (!(root instanceof Element)) {
+    throw new TypeError('render: expects second argument to be an instance of Element.')
+  }
+  root.appendChild(element)
   element.children.forEach(child => {
     if (mounts.has(child)) {
       const mount = mounts.get(child)
@@ -75,16 +81,6 @@ export const render = (component, root) => {
   })
   return element
 }
-
-/**
- * Hooks Usage:
- *
-hooks(element, {
-  mount: () => console.log('Component mounted!'),
-  update: () => console.log('Component updated!'),
-  unmount: () => console.log('Component will unmount!')
-})
-*/
 
 export const hooks = (element, hook) => {
   if (!(element instanceof Element)) {
