@@ -1,8 +1,8 @@
 {
   "name": "@sswahn/bind",
-  "version": "1.0.0-beta.25",
+  "version": "1.0.0-beta.26",
   "license": "MIT",
-  "description": "Bind is a lightweight JavaScript framework designed for managing state and connecting components to state changes.",
+  "description": "Bind is a minimalistic, state-driven UI framework designed for developers who need a reactive web component model without the overhead of larger frameworks.",
   "type": "module",
   "main": "src/index.js",
   "keywords": [
