@@ -151,7 +151,7 @@ const delegateEventHandling = event => {
   if (eventHandlers) {
     for (const [elem, handler] of eventHandlers.entries()) {
       if (target === elem || elem.contains(target)) {
-        handler(event)
+        return handler(event)
       }
     }
   }
