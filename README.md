@@ -14,6 +14,18 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 - **Minimalistic & Lightweight**: Built with performance and simplicity in mind, Bind adds minimal overhead to projects.
 - **Mutation Observers**: Keep track of DOM changes efficiently and clean up resources when elements are removed.
 - **Event Handlers Cleanup**: Automatically manage and clean up event handlers, preventing memory leaks and ensuring optimal performance.
+
+## Installation
+
+If Bind is published on npm, you can easily install it using the npm or yarn command. Ensure you have [Node.js](https://nodejs.org/) installed before following the instructions below.
+
+### Using npm
+
+Install `bind` using npm:
+
+```bash
+npm install @sswahn/bind --save
+
   
 ## Documentation  
 ### Import
