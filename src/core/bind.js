@@ -76,42 +76,35 @@ export const render = (component, root) => {
   return element
 }
 
-// Lifestyle hooks
+/**
+ * Hooks Usage:
+ *
+hooks(element, {
+  mount: () => console.log('Component mounted!'),
+  update: () => console.log('Component updated!'),
+  unmount: () => console.log('Component will unmount!')
+})
+*/
 
-export const hooks = (element, { mount, update, unmount }) => {
-  if (mount) onMount(element, mount)
-  if (update) onUpdate(element, update)
-  if (unmount) onUnmount(element, unmount)
-}
-
-const onMount = (element, fn) => {
+export const hooks = (element, hook) => {
   if (!(element instanceof Element)) {
     throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
   }
-  if (typeof fn !== 'function') {
-    throw new TypeError('onUpdate: expects second argument to be a of type function')
+  if (typeof hook !== 'object' || Array.isArray(action)) {
+    throw new TypeError('hooks: second argument must be an object literal.')
   }
-  mounts.set(element, fn)
-}
-
-const onUpdate = (element, fn) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
+  if (!Object.values(obj).every(value => typeof value === 'function')) {
+    throw new TypeError('hooks: expects second argument property values to be a of type function')
   }
-  if (typeof fn !== 'function') {
-    throw new TypeError('onUpdate: expects second argument to be a of type function')
+  if (hook.mount) {
+    mounts.set(element, hook.mount)
   }
-  updates.set(element, fn)
-}
-
-const onUnmount = (element, fn) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
+  if (hook.update) {
+    updates.set(element, hook.update)
   }
-  if (typeof fn !== 'function') {
-    throw new TypeError('onUpdate: expects second argument to be a of type function')
+  if (hook.unmount) {
+    unmounts.set(element, hook.unmount)
   }
-  unmounts.set(element, fn)
 }
 
 const handleNotification = (item, type) => {
