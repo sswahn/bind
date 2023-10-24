@@ -17,10 +17,13 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 
 ## Installation
 
-Install `bind` using npm:  
-
+Using npm:  
 ```bash  
 npm install @sswahn/bind --save  
+```
+Using GitHub:  
+```bash  
+git clone https://github.com/sswahn/bind.git
 ```
 
 ## Documentation  
