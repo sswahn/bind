@@ -78,7 +78,7 @@ export const render = (component, root) => {
 
 // Lifestyle hooks
 
-// perhaps consolidate lifecycle into one function that fires at all stages of lifecycle like useEffect called: hook(el, fn)
+// perhaps consolidate lifecycle into one function that fires at all stages of lifecycle like useEffect called: hooks(el, fn)
 
 export const onMount = (element, fn) => {
   if (!(element instanceof Element)) {
