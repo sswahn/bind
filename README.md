@@ -84,14 +84,23 @@ const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
 ```  
 
 ## Example
+This example demonstrates how to build a simple counter application using `bind`. We'll create a centralized state for our counter, bind various components to this state, and show how state changes can lead to UI updates.
+
+### Setting Up the Main App (`index.js`)
+
+Here, we initialize the store and render our main `Counter` component to the DOM.  
+
 ```javascript
-// index.js
 import { createStore, render } from '@sswahn/bind'
 import Counter from './Counter'
 
 createStore({ counter: 0 })
 render(Counter(), document.getElementById('root'))
-```
+```  
+
+### Building the Counter Component (Counter.js)
+The main component, `Counter`, composes a Button and a Display to provide a user interface for our counter.  
+
 ```javascript
 // Counter.js
 import { html } from '@sswahn/bind'
@@ -112,6 +121,10 @@ const Counter = () => {
 
 export default Counter
 ```
+
+### Creating the Button Component (Button.js)
+The `Button` component is responsible for incrementing the counter when clicked.  
+
 ```javascript
 // Button.js
 import { html, bind } from '@sswahn/bind'
@@ -131,6 +144,10 @@ const Button = ({ context, dispatch }) => {
 
 export default bind('counter', Button)
 ```
+
+### Creating the Display Component (Display.js)
+The `Display` component simply shows the current value of our counter.  
+
 ```javascript
 // Display.js
 import { html, bind } from '@sswahn/bind'
