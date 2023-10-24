@@ -19,7 +19,7 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 
 Using npm:  
 ```bash  
-npm install @sswahn/bind --save  
+npm install @sswahn/bind  
 ```  
 
 ## Documentation  
