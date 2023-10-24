@@ -129,12 +129,7 @@ export const bind = (type, component) => {
     if (!element) {
       return document.createDocumentFragment()
     }
-    observe(element, type, component) 
-    /* does this work as intended?
-    if (updates.has(element)) {
-      const update = updates.get(element)
-      update()
-    } */
+    observe(element, type, component)
     components.set(component, element)
     return element
   }
