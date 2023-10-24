@@ -260,7 +260,7 @@ const observe = (element, type, component) => {
   })
   const observer = new MutationObserver(mutations => {
     const removed = mutations.map(mutation => mutation.removedNodes).flat()
-    for (let node of removed) {                                               // need to handle nested children in fragment?
+    for (let node of removed) {                                              
       if (node === element) {
         cleanup(type, component, node)
         observer.disconnect()
@@ -269,6 +269,10 @@ const observe = (element, type, component) => {
     }
   })
   observer.observe(document.body, {childList: true, subtree: true})
+
+  if (element.childNodes && element.childNodes.length) {
+    element.childNodes.forEach(childNode => observe(childNode, type, component))
+  }
 }
 
 const cleanup = (type, component, node) => {
