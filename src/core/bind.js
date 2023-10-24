@@ -90,10 +90,10 @@ export const hooks = (element, hook) => {
   if (!(element instanceof Element)) {
     throw new TypeError('onUpdate: expects first argument to be an instance of Element.')
   }
-  if (typeof hook !== 'object' || Array.isArray(action)) {
+  if (typeof hook !== 'object' || Array.isArray(hook)) {
     throw new TypeError('hooks: second argument must be an object literal.')
   }
-  if (!Object.values(obj).every(value => typeof value === 'function')) {
+  if (!Object.values(hook).every(value => typeof value === 'function')) {
     throw new TypeError('hooks: expects second argument property values to be a of type function')
   }
   if (hook.mount) {
@@ -273,8 +273,8 @@ const observe = (element, type, component) => {
 }
 
 const cleanup = (type, component, node) => {
-  if (unmounts.has(child)) {
-    const unmount = unmounts.get(child)
+  if (unmounts.has(node)) {
+    const unmount = unmounts.get(node)
     unmount()
   }
   unbind(type, component)
