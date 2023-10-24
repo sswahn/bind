@@ -46,7 +46,7 @@ const processQueue = key => {
     queue.delete(key)
     continueProcessingQueue(key)
   } catch (error) {
-    throw new Error(`Error processing queue: ${error}.`)
+    console.error(`Error processing queue: ${error}.`)
   }
 }
 
