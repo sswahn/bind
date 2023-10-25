@@ -98,7 +98,7 @@ createStore({ counter: 0 })
 render(Counter(), document.getElementById('root'))
 ```  
 
-### Building the Counter Component (Counter.js)
+### Building the Counter Component (`Counter.js`)
 The main component, `Counter`, composes a Button and a Display to provide a user interface for our counter.  
 
 ```javascript
@@ -121,7 +121,7 @@ const Counter = () => {
 export default Counter
 ```
 
-### Creating the Button Component (Button.js)
+### Creating the Button Component (`Button.js`)
 The `Button` component is responsible for incrementing the counter when clicked.  
 
 ```javascript
@@ -143,7 +143,7 @@ const Button = ({ context, dispatch }) => {
 export default bind('counter', Button)
 ```
 
-### Creating the Display Component (Display.js)
+### Creating the Display Component (`Display.js`)
 The `Display` component simply shows the current value of our counter.  
 
 ```javascript
