@@ -220,7 +220,7 @@ export const html = (type, attributes = {}, children = []) => {
     }
   })
   const nodes = children.map(child => {
-    if (!child) {
+    if (!child || child === false) {
       return document.createDocumentFragment()
     } else if (child instanceof Node) {
       return child
