@@ -40,6 +40,7 @@ const dispatch = action => {
   }
 }
 
+// Processes actions stored in queue
 const processQueue = key => {
   try {
     const {type, payload} = queue.get(key)
@@ -59,7 +60,7 @@ const updateState = (type, payload) => {
 const notifySubscribers = type => {
   try {
     const array = subscribers.get(type)
-    array?.forEach(item => handleNotification(item, type))
+    array?.forEach(item => handleSubscriberNotification(item, type))
   } catch (error) {
     throw new Error(`Error notifying subscribers: ${error}.`)
   }
@@ -68,7 +69,8 @@ const notifySubscribers = type => {
 // Right now, you're notifying subscribers for each type individually, 
 // which could lead to redundant operations if multiple actions affect the same component.
 
-const handleNotification = (item, type) => {
+// updates a component subscribed to a specific type in state
+const handleSubscriberNotification = (item, type) => {
   try {
     const { component, parameters } = item
     const liveNode = components.get(component)
@@ -121,6 +123,7 @@ const processBatch = () => {
   }
 }
 
+// Appends and element to the dom and fires post mount functions
 export const render = (element, root) => {
   if (!(element instanceof Element)) {
     throw new TypeError('render: expects first argument to be an instance of Element.')
@@ -138,6 +141,7 @@ export const render = (element, root) => {
   return element
 }
 
+// Lifecycle hooks: mount, update, unmount
 export const hooks = (element, hook) => {
   if (!(element instanceof Element)) {
     throw new TypeError('hooks: expects first argument to be an instance of Element.')
@@ -162,6 +166,7 @@ export const hooks = (element, hook) => {
   }
 }
 
+// Binds a component to a specific type in state
 export const bind = (type, component) => {
   if (typeof type !== 'string') {
     throw new TypeError('bind: function first argument must be a string.')
@@ -179,16 +184,6 @@ export const bind = (type, component) => {
     observe(element, type, component)
     components.set(component, element)
     return element
-  }
-}
-
-const unbind = (type, component) => {
-  try {
-    const subscription = subscribers.get(type)
-    const filtered = subscription.filter(item => item.component !== component)
-    subscribers.set(type, filtered)
-  } catch (error) {
-    throw new Error(`Error unbinding component: ${error}.`)
   }
 }
 
@@ -247,6 +242,16 @@ export const html = (type, attributes = {}, children = []) => {
   })
   element.append(...nodes)
   return element
+}
+
+const unbind = (type, component) => {
+  try {
+    const subscription = subscribers.get(type)
+    const filtered = subscription.filter(item => item.component !== component)
+    subscribers.set(type, filtered)
+  } catch (error) {
+    throw new Error(`Error unbinding component: ${error}.`)
+  }
 }
 
 const removeEventHandlers = element => {
