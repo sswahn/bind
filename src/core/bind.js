@@ -125,7 +125,7 @@ const processBatch = () => {
   }
 }
 
-// Appends and element to the dom and fires post mount functions
+// Appends and element to the dom and invokes post mount functions
 export const render = (element, root) => {
   if (!(element instanceof Element)) {
     throw new TypeError('render: expects first argument to be an instance of Element.')
@@ -134,13 +134,17 @@ export const render = (element, root) => {
     throw new TypeError('render: expects second argument to be an instance of Element.')
   }
   root.appendChild(element)
-  element.children.forEach(child => {
-    if (mounts.has(child)) {
-      const mount = mounts.get(child)
-      mount()
-    }
-  })
+  processMounts(element)
   return element
+}
+
+// Invokes the mount lifecycle hook recursively for each element and its children
+const processMounts = element => {
+  if (mounts.has(element)) {
+    const mount = mounts.get(element)
+    mount()
+  }
+  element.children.forEach(child => processMounts(child))
 }
 
 // Lifecycle hooks: mount, update, unmount
@@ -280,6 +284,12 @@ const observe = (element, type, component) => {
     for (let node of removed) {
       if (node === element) {
         cleanup(type, component, node)
+        node.querySelectorAll('*').forEach(child => {
+          if (unmounts.has(child)) {
+            const unmount = unmounts.get(child)
+            unmount()
+          }
+        })
         observer.disconnect()
         return
       }
