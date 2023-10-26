@@ -69,7 +69,7 @@ const notifySubscribers = type => {
 // Right now, you're notifying subscribers for each type individually, 
 // which could lead to redundant operations if multiple actions affect the same component.
 
-// updates a component subscribed to a specific type in state
+// Updates a component subscribed to a specific type in state
 const handleSubscriberNotification = (item, type) => {
   try {
     const { component, parameters } = item
