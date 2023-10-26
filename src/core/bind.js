@@ -126,8 +126,16 @@ const handleNotification = (item, type) => {
 }
 
 const continueProcessingQueue = key => {
+  const currentTime = Date.now()
+  if (!firstActionTimestamp) {
+    firstActionTimestamp = currentTime
+  }
+  const MAX_BATCH_SIZE = 5
+  const MAX_WAIT_TIME = 50 // milliseconds
+  let firstActionTimestamp = null
   const size = queue.size
-  if (size >= 5) {
+  if (size >= MAX_BATCH_SIZE || currentTime - firstActionTimestamp >= MAX_WAIT_TIME) {
+    firstActionTimestamp = null
     return processBatch()
   } 
   if (size > 0) {
@@ -135,7 +143,7 @@ const continueProcessingQueue = key => {
   }
 }
 
-const processBatch = () => {
+const processBatch = () => { // should this end with continueProcessingQueue?
   let batch = {}
   queue.forEach((action, key) => {
     batch[action.type] = action.payload
