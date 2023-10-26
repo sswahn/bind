@@ -92,7 +92,7 @@ const continueProcessingQueue = key => {
     firstActionTimestamp = currentTime
   }
   const MAX_BATCH_SIZE = 5
-  const MAX_WAIT_TIME = 50 // milliseconds
+  const MAX_WAIT_TIME = 250 // milliseconds
   const size = queue.size
   if (size >= MAX_BATCH_SIZE || currentTime - firstActionTimestamp >= MAX_WAIT_TIME) {
     firstActionTimestamp = null
