@@ -17,7 +17,7 @@ export const createStore = initialState => {
   state = {...initialState}
 }
   
-const dispatch = action => {
+const dispatch = action => { // consider adding middleware
   if (typeof action !== 'object' || Array.isArray(action)) {
     throw new TypeError('dispatch: argument must be an object literal.')
   }
@@ -62,7 +62,7 @@ const updateState = (type, payload) => {
 const notifySubscribers = type => {
   try {
     const array = subscribers.get(type)
-    array?.forEach(item => handleSubscriberNotification(item, type))
+    array?.forEach(item => handleNotification(item, type))
   } catch (error) {
     throw new Error(`Error notifying subscribers: ${error}.`)
   }
@@ -72,7 +72,7 @@ const notifySubscribers = type => {
 // which could lead to redundant operations if multiple actions affect the same component.
 
 // Updates a component subscribed to a specific type in state
-const handleSubscriberNotification = (item, type) => {
+const handleNotification = (item, type) => {
   try {
     const { component, parameters } = item
     const liveNode = components.get(component)
