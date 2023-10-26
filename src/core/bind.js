@@ -90,7 +90,7 @@ export const hooks = (element, hook) => {
     throw new TypeError('hooks: second argument must be an object literal.')
   }
   if (!hook.hasOwnProperty('mount') && !hook.hasOwnProperty('update') && !hook.hasOwnProperty('unmount')) {
-    throw new Error('hooks: At least one of the properties (mount, update, unmount) should be provided.')
+    throw new SyntaxError('hooks: At least one of the properties (mount, update, unmount) should be provided.')
   }
   if (!Object.values(hook).every(value => typeof value === 'function')) {
     throw new TypeError('hooks: expects second argument property values to be a of type function')
