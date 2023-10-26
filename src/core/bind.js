@@ -247,7 +247,7 @@ const removeEventHandlers = element => {
 }
 
 const observe = (element, type, component) => {
-  if (!(element instanceof Element) || !(element instanceof DocumentFragment)) {
+  if (!(element instanceof Element) && !(element instanceof DocumentFragment)) {
     throw new TypeError('Bound components must return instances of Element or DocumentFragment.')
   }
   if (observables.get(element)) {
