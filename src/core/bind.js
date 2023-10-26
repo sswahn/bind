@@ -309,10 +309,6 @@ const observe = (element, type, component) => {
 }
 
 const cleanup = (type, component, node) => {
-  if (unmounts.has(node)) {
-    const unmount = unmounts.get(node)
-    unmount()
-  }
   unbind(type, component)
   removeEventHandlers(node)
   components.delete(component)
