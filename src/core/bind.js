@@ -8,6 +8,8 @@ const unmounts = new WeakMap()
 const observables = new WeakMap()
 const handlersRegistry = new Map()
 
+// consider better error handling system
+
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     throw new TypeError('createStore: argument must be an object literal.')
@@ -199,7 +201,7 @@ const delegateEventHandling = event => {
   }
 }
 
-const nonBubblingEvents = ['change', 'error', 'load', 'mouseenter', 'mouseleave', 'reset', 'scroll', 'unload']
+const nonBubblingEvents = ['change', 'error', 'load', 'mouseenter', 'mouseleave', 'reset', 'scroll', 'unload'] // make extendable
 
 export const html = (type, attributes = {}, children = []) => {
   if (typeof type !== 'string') {
@@ -234,7 +236,7 @@ export const html = (type, attributes = {}, children = []) => {
       return document.createDocumentFragment()
     } else if (child instanceof Node) {
       return child
-    } else if (typeof child === 'string') {
+    } else if (typeof child === 'string') { // Boolean?
       return document.createTextNode(child)
     } else {
       throw new TypeError('html: Expected child elements to be of type Node or string.')
