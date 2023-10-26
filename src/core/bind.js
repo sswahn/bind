@@ -65,6 +65,9 @@ const notifySubscribers = type => {
   }
 }
 
+// Right now, you're notifying subscribers for each type individually, 
+// which could lead to redundant operations if multiple actions affect the same component.
+
 const handleNotification = (item, type) => {
   try {
     const { component, parameters } = item
