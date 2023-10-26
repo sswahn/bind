@@ -96,14 +96,14 @@ const continueProcessingQueue = key => {
   const size = queue.size
   if (size >= MAX_BATCH_SIZE || currentTime - firstActionTimestamp >= MAX_WAIT_TIME) {
     firstActionTimestamp = null
-    return processBatch(key)
+    return processBatch()
   } 
   if (size > 0) {
     processQueue(key + 1)
   }
 }
 
-const processBatch = key => {
+const processBatch = () => {
   let batch = {}
   queue.forEach((action, key) => {
     batch[action.type] = action.payload
@@ -114,7 +114,7 @@ const processBatch = key => {
     notifySubscribers(type)
   })
   if (queue.size > 0) {
-    processQueue(key + 1)
+    processQueue(1)
   }
 }
 
