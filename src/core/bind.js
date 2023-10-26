@@ -283,7 +283,7 @@ const observe = (element, type, component) => {
     const removed = mutations.map(mutation => mutation.removedNodes).flat()
     for (let node of removed) {
       if (node === element) {
-        node.querySelectorAll('*').forEach(child => {
+        node.getElementsByTagName('*').forEach(child => {
           if (unmounts.has(child)) {
             const unmount = unmounts.get(child)
             unmount()
