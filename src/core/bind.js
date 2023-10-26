@@ -65,47 +65,6 @@ const notifySubscribers = type => {
   }
 }
 
-export const render = (element, root) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('render: expects first argument to be an instance of Element.')
-  }
-  if (!(root instanceof Element)) {
-    throw new TypeError('render: expects second argument to be an instance of Element.')
-  }
-  root.appendChild(element)
-  element.children.forEach(child => {
-    if (mounts.has(child)) {
-      const mount = mounts.get(child)
-      mount()
-    }
-  })
-  return element
-}
-
-export const hooks = (element, hook) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('hooks: expects first argument to be an instance of Element.')
-  }
-  if (typeof hook !== 'object' || Array.isArray(hook)) {
-    throw new TypeError('hooks: second argument must be an object literal.')
-  }
-  if (!hook.hasOwnProperty('mount') && !hook.hasOwnProperty('update') && !hook.hasOwnProperty('unmount')) {
-    throw new SyntaxError('hooks: At least one of the properties (mount, update, unmount) should be provided.')
-  }
-  if (!Object.values(hook).every(value => typeof value === 'function')) {
-    throw new TypeError('hooks: expects second argument property values to be a of type function')
-  }
-  if (hook.mount) {
-    mounts.set(element, hook.mount)
-  }
-  if (hook.update) {
-    updates.set(element, hook.update)
-  }
-  if (hook.unmount) {
-    unmounts.set(element, hook.unmount)
-  }
-}
-
 const handleNotification = (item, type) => {
   try {
     const { component, parameters } = item
@@ -153,6 +112,47 @@ const processBatch = () => { // should this end with continueProcessingQueue?
   Object.keys(batch).forEach(type => {
     notifySubscribers(type)
   })
+}
+
+export const render = (element, root) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('render: expects first argument to be an instance of Element.')
+  }
+  if (!(root instanceof Element)) {
+    throw new TypeError('render: expects second argument to be an instance of Element.')
+  }
+  root.appendChild(element)
+  element.children.forEach(child => {
+    if (mounts.has(child)) {
+      const mount = mounts.get(child)
+      mount()
+    }
+  })
+  return element
+}
+
+export const hooks = (element, hook) => {
+  if (!(element instanceof Element)) {
+    throw new TypeError('hooks: expects first argument to be an instance of Element.')
+  }
+  if (typeof hook !== 'object' || Array.isArray(hook)) {
+    throw new TypeError('hooks: second argument must be an object literal.')
+  }
+  if (!hook.hasOwnProperty('mount') && !hook.hasOwnProperty('update') && !hook.hasOwnProperty('unmount')) {
+    throw new SyntaxError('hooks: At least one of the properties (mount, update, unmount) should be provided.')
+  }
+  if (!Object.values(hook).every(value => typeof value === 'function')) {
+    throw new TypeError('hooks: expects second argument property values to be a of type function')
+  }
+  if (hook.mount) {
+    mounts.set(element, hook.mount)
+  }
+  if (hook.update) {
+    updates.set(element, hook.update)
+  }
+  if (hook.unmount) {
+    unmounts.set(element, hook.unmount)
+  }
 }
 
 export const bind = (type, component) => {
