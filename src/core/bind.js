@@ -2,9 +2,6 @@ let state = {}
 const queue = new Map()
 const subscribers = new Map()
 const components = new WeakMap()
-const mounts = new WeakMap()
-const updates = new WeakMap()
-const unmounts = new WeakMap()
 const observables = new WeakMap()
 const handlersRegistry = new Map()
 
@@ -83,10 +80,6 @@ const handleNotification = (item, type) => {
       return document.createDocumentFragment()
     }
     liveNode.parentNode.replaceChild(newElement, liveNode)
-    if (updates.has(newElement)) {
-      const update = updates.get(newElement)
-      update()
-    }
     components.set(component, newElement)
   } catch (error) {
     throw new Error(`Error notifying subscribers: ${error}.`)
@@ -136,42 +129,8 @@ export const render = (element, root) => {
     throw new TypeError('render: expects second argument to be an instance of Element.')
   }
   root.appendChild(element)
-  processMounts(element)
+  // mounting logic
   return element
-}
-
-// Invokes the mount lifecycle hook recursively for each element and its children
-const processMounts = element => {
-  if (mounts.has(element)) {
-    const mount = mounts.get(element)
-    mount()
-  }
-  element.children.forEach(child => processMounts(child))
-}
-
-// Lifecycle hooks: mount, update, unmount
-export const hooks = (element, hook) => {
-  if (!(element instanceof Element)) {
-    throw new TypeError('hooks: expects first argument to be an instance of Element.')
-  }
-  if (typeof hook !== 'object' || Array.isArray(hook)) {
-    throw new TypeError('hooks: second argument must be an object literal.')
-  }
-  if (!hook.hasOwnProperty('mount') && !hook.hasOwnProperty('update') && !hook.hasOwnProperty('unmount')) {
-    throw new SyntaxError('hooks: At least one of the properties (mount, update, unmount) should be provided.')
-  }
-  if (!Object.values(hook).every(value => typeof value === 'function')) {
-    throw new TypeError('hooks: expects second argument property values to be a of type function')
-  }
-  if (hook.mount) {
-    mounts.set(element, hook.mount)
-  }
-  if (hook.update) {
-    updates.set(element, hook.update)
-  }
-  if (hook.unmount) {
-    unmounts.set(element, hook.unmount)
-  }
 }
 
 // Binds a component to a specific type in state
@@ -285,12 +244,6 @@ const observe = (element, type, component) => {
     const removed = mutations.map(mutation => mutation.removedNodes).flat()
     for (let node of removed) {
       if (node === element) {
-        node.getElementsByTagName('*').forEach(child => {
-          if (unmounts.has(child)) {
-            const unmount = unmounts.get(child)
-            unmount()
-          }
-        })
         cleanup(type, component, node)
         observer.disconnect()
         return
@@ -314,8 +267,5 @@ const cleanup = (type, component, node) => {
   unbind(type, component)
   removeEventHandlers(node)
   components.delete(component)
-  mounts.delete(node)
-  updates.delete(node)
-  unmounts.delete(node)
   observables.delete(node)
 }
