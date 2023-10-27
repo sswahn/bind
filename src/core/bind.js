@@ -10,6 +10,8 @@ const handlersRegistry = new Map()
 
 // consider better error handling system
 
+// remove or alter hooks so it doesnt mess up the return of html
+
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     throw new TypeError('createStore: argument must be an object literal.')
