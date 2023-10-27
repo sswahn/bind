@@ -6,7 +6,6 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 - **Centralized State Management**: Maintain a single source of truth with a well-structured centralized state store.
 - **Reactive Components**: Components react automatically to state changes without manual intervention.
 - **Efficient Event Delegation**: Utilize event delegation techniques to manage events efficiently without attaching individual event listeners to every element.
-- **Lifecycle Hooks**: Access and utilize component lifecycle methods like `mount`, `update`, and `unmount` for fine-grained control.
 - **Declarative UI**: Easily create web components with the `html` utility function, ensuring a clean and descriptive UI design.
 - **Easy State Binding**: Use the `bind` function to connect components to specific parts of your state, allowing them to automatically react to changes in that state.
 - **Batched State Updates**: Process multiple state updates in batches, optimizing rendering and reducing unnecessary component re-renders.
@@ -54,16 +53,6 @@ Use the `bind` function to create a relationship between your component and a sp
 ```javascript
 const BoundComponent = bind('count', MyComponent)
 ```  
-
-### Lifecycle Hooks  
-`bind` provides lifecycle hooks that you can use to perform specific operations during the lifecycle of your components, namely during mounting, updating, and unmounting. 
-```javascript
-const element = html('div')
-const mount = () => console.log('component mounted.')
-const update = () => console.log('component updated.')
-const unmount = () => console.log('component unmounted.')
-hooks(element, {mount, update, unmount})
-```
 
 ### Render Components  
 To attach your application (or component) to the DOM, use the `render` function. This function expects the component and a DOM root element as its arguments.
