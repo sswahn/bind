@@ -25,7 +25,7 @@ npm install @sswahn/bind
 ### Importing Bind
 To get started, first import the necessary functions from `bind`.  
 ```javascript
-import {createStore, render, bind, html, hooks} from '@sswahn/bind'
+import {createStore, render, bind, html} from '@sswahn/bind'
 ```  
 
 ### Initializing State  
