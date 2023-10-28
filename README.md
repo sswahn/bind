@@ -1,5 +1,5 @@
 # Bind
-Bind is a minimalistic, state-driven UI framework designed for developers who need a reactive web component model without the overhead of larger frameworks. With features such as lifecycle hooks, efficient event delegation, and a centralized state store, Bind bridges the gap between simplicity and functionality, making it ideal for single-page applications and complex web components alike.
+Bind is a minimalistic, state-driven UI framework designed for developers who need a reactive web component model without the overhead of larger frameworks. With features such as efficient event delegation, and a centralized state store, Bind bridges the gap between simplicity and functionality, making it ideal for single-page applications and complex web components alike.
 
 ## Features
 
