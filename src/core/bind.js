@@ -7,8 +7,6 @@ const handlersRegistry = new Map()
 
 // consider better error handling system
 
-// remove or alter hooks so it doesnt mess up the return of html
-
 export const createStore = initialState => {
   if (typeof initialState !== 'object' || Array.isArray(initialState)) {
     throw new TypeError('createStore: argument must be an object literal.')
@@ -201,7 +199,7 @@ export const html = (type, attributes = {}, children = []) => {
       return document.createDocumentFragment()
     } else if (child instanceof Node) {
       return child
-    } else if (typeof child === 'string') { // Boolean?
+    } else if (typeof child === 'string') { // allow Boolean?
       return document.createTextNode(child)
     } else {
       throw new TypeError('html: Expected child elements to be of type Node or string.')
