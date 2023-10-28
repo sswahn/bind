@@ -1,6 +1,6 @@
 {
   "name": "@sswahn/bind",
-  "version": "1.0.0-beta.32",
+  "version": "1.0.0-beta.33",
   "license": "MIT",
   "description": "Bind is a minimalistic, state-driven UI framework designed for developers who need a reactive web component model without the overhead of larger frameworks.",
   "type": "module",
