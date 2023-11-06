@@ -70,7 +70,26 @@ Use the `html` utility function to create and return DOM elements. It supports e
 const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
   html('span', {}, ['Child span'])
 ])
+```
+
+### Lifecycle Hooks 
+Call the `withHooks` function when defining your component. Pass the html element and a callback function as arguments.
+
+```javascript
+import { html, withHooks} from '@sswahn/bind'
+...
+const yourCallback = () => {
+  console.log('using lifecycle hooks')
+  return () => {
+    console.log('component unmounted')
+  }
+}
+const element = html('div')
+
+return withHooks(element, yourCallback)
+
 ```  
+
 
 ## Example
 This example demonstrates how to build a simple counter application using `bind`. We'll create a centralized state for our counter, bind various components to this state, and show how state changes can lead to UI updates.
