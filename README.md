@@ -77,17 +77,17 @@ Call the `withHooks` function when defining your component. Pass the html elemen
 
 ```javascript
 import { html, withHooks} from '@sswahn/bind'
-...
-const yourCallback = () => {
-  console.log('using lifecycle hooks')
-  return () => {
-    console.log('component unmounted')
+
+const App = () => {
+  const yourCallback = () => {
+    console.log('using lifecycle hooks')
+    return () => {
+      console.log('component unmounted')
+    } 
   }
+  const element = html('div')
+  return withHooks(element, yourCallback)
 }
-const element = html('div')
-
-return withHooks(element, yourCallback)
-
 ```  
 
 
