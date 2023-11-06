@@ -3,6 +3,8 @@ const queue = new Map()
 const subscribers = new Map()
 const components = new WeakMap()
 const observables = new WeakMap()
+const updates = new WeakMap()
+const unmounts = new WeakMap()
 const handlersRegistry = new Map()
 
 // consider better error handling system
@@ -65,6 +67,10 @@ const notifySubscribers = type => {
   }
 }
 
+export const withHooks = (element, fn) => {
+  updates.set(element, fn)
+} 
+
 // Right now, you're notifying subscribers for each type individually, 
 // which could lead to redundant operations if multiple actions affect the same component.
 
@@ -76,6 +82,11 @@ const handleNotification = (item, type) => {
     const newElement = component({context: {[type]: state[type]}, dispatch, params: parameters})
     if (!newElement) {
       return document.createDocumentFragment()
+    }
+    if (updates.has(newElement)) {
+      const update = updates.get(newElement)
+      const unmount = update()
+      unmount && umounts.set(newElement, unmount)
     }
     liveNode.parentNode.replaceChild(newElement, liveNode)
     components.set(component, newElement)
@@ -262,6 +273,11 @@ const observe = (element, type, component) => {
 }
 
 const cleanup = (type, component, node) => {
+  if (unmounts.has(node)) {
+    const unmount = unmounts.get(node)
+    unmount()
+    umounts.delete(node)
+  }
   unbind(type, component)
   removeEventHandlers(node)
   components.delete(component)
