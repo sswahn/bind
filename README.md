@@ -101,7 +101,7 @@ const Counter = () => {
     class: 'section'
   }
   const children = [
-    Button()
+    Button(),
     Display()
   ]
   return html('div', attributes, children)
