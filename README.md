@@ -76,17 +76,17 @@ const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
 Call the `withHooks` function when defining your component. Pass the html element and a callback function as arguments.
 
 ```javascript
-import { html, withHooks} from '@sswahn/bind'
+import { html, withHooks } from '@sswahn/bind'
 
 const App = () => {
-  const yourCallback = () => {
-    console.log('using lifecycle hooks')
+  const onUpdate = () => {
+    console.log('Updating component with lifecycle hooks.')
     return () => {
-      console.log('component unmounted')
+      console.log('Component has unmounted.')
     } 
   }
   const element = html('div')
-  return withHooks(element, yourCallback)
+  return withHooks(element, onUpdate)
 }
 ```  
 
