@@ -69,6 +69,7 @@ const notifySubscribers = type => {
 
 export const withHooks = (element, fn) => {
   updates.set(element, fn)
+  return element
 } 
 
 // Right now, you're notifying subscribers for each type individually, 
