@@ -138,8 +138,18 @@ export const render = (element, root) => {
   if (!(root instanceof Element)) {
     throw new TypeError('render: expects second argument to be an instance of Element.')
   }
-  root.appendChild(element)
-  // mounting logic
+  const appended = root.appendChild(element)
+  const traverseAndUpdate = node => {
+    if (node instanceof Element && updates.has(node)) {
+      const update = updates.get(node)
+      const unmount = update()
+      unmount && umounts.set(node, unmount)
+    }
+    if (node.childNodes && node.childNodes.length > 0) {
+      node.childNodes.forEach(child => traverseAndUpdate(child))
+    }
+  }
+  traverseAndUpdate(appended)
   return element
 }
 
@@ -278,6 +288,7 @@ const cleanup = (type, component, node) => {
     const unmount = unmounts.get(node)
     unmount()
     umounts.delete(node)
+    updates.delete(node)
   }
   unbind(type, component)
   removeEventHandlers(node)
