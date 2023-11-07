@@ -63,14 +63,16 @@ render(component(), document.getElementBy('root'))
 
  ### Building HTML Elements  
 Use the `html` utility function to create and return DOM elements. It supports event delegation and can be nested to create complex structures.
-
-  · **type**: The type of DOM element to create (e.g., "div", "span").  
-  · **attributes**: An object of attributes to apply to the DOM element.  
-  · **children**: An array of child nodes or text to append to the created element.  
 ```javascript
-const myDiv = html('div', { class: 'my-class', textContent: 'Hello!' }, [
-  html('span', {}, ['Child span'])
-])
+const attributes = {
+  id: 'myDiv',
+  class: 'sections'
+}
+const children = [
+  html('label'),
+  html('input')
+]
+const myDiv = html('div', attributes, children)
 ```
 
 ### Lifecycle Hooks 
