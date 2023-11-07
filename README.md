@@ -15,6 +15,8 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 - **Mutation Observers**: Keep track of DOM changes efficiently and clean up resources when elements are removed.
 - **Event Handlers Cleanup**: Automatically manage and clean up event handlers, preventing memory leaks and ensuring optimal performance.
 
+<!-- TODO: create a functional router. Call the repo @sswahn/switch. -->
+
 ## Installation
 
 Using npm:  
