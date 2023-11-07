@@ -10,6 +10,7 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 - **Easy State Binding**: Use the `bind` function to connect components to specific parts of your state, allowing them to automatically react to changes in that state.
 - **Batched State Updates**: Process multiple state updates in batches, optimizing rendering and reducing unnecessary component re-renders.
 - **DOM Rendering & Update**: The `render` method allows seamless DOM rendering, and components auto-update in response to state changes.
+- **Lifecycle Hooks**: The `withHooks` function gives access to a components lifecycle hooks. Pass an html element and a callback function as arguments.
 - **Minimalistic & Lightweight**: Built with performance and simplicity in mind, Bind adds minimal overhead to projects.
 - **Mutation Observers**: Keep track of DOM changes efficiently and clean up resources when elements are removed.
 - **Event Handlers Cleanup**: Automatically manage and clean up event handlers, preventing memory leaks and ensuring optimal performance.
