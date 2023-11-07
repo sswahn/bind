@@ -66,7 +66,7 @@ Use the `html` utility function to create and return DOM elements. It supports e
 ```javascript
 const attributes = {
   id: 'myDiv',
-  class: 'sections'
+  class: 'section'
 }
 const children = [
   html('label'),
