@@ -86,7 +86,7 @@ import { html, withHooks } from '@sswahn/bind'
 
 const App = () => {
   const onUpdate = () => {
-    console.log('Updating component with lifecycle hooks.')
+    console.log('Component has mounted, or has been rerendered.')
     return () => {
       console.log('Component has unmounted.')
     } 
