@@ -11,6 +11,7 @@ Bind is a minimalistic, state-driven UI framework designed for developers who ne
 - **Batched State Updates**: Process multiple state updates in batches, optimizing rendering and reducing unnecessary component re-renders.
 - **DOM Rendering & Update**: The `render` method allows seamless DOM rendering, and components auto-update in response to state changes.
 - **Lifecycle Hooks**: The `withHooks` function gives access to a components lifecycle hooks. Pass an html element and a callback function as arguments.
+- **Memoization**: The `memoize` function optimizes performance by caching and reusing computed results.
 - **Minimalistic & Lightweight**: Built with performance and simplicity in mind, Bind adds minimal overhead to projects.
 - **Mutation Observers**: Keep track of DOM changes efficiently and clean up resources when elements are removed.
 - **Event Handlers Cleanup**: Automatically manage and clean up event handlers, preventing memory leaks and ensuring optimal performance.
@@ -28,7 +29,7 @@ npm install @sswahn/bind
 ### Importing Bind
 To get started, first import the necessary functions from `bind`.  
 ```javascript
-import {createStore, render, bind, html, withHooks} from '@sswahn/bind'
+import {createStore, render, bind, html, withHooks, memoize} from '@sswahn/bind'
 ```  
 
 ### Initializing State  
@@ -95,6 +96,12 @@ const App = () => {
 }
 ```  
 
+### Memoization
+Use the `memoize` function to optimize performance by caching and reusing computed results, reducing redundant calculations for repeated calls with the same input arguments.
+```javascript
+const MemoizedComponent = memoize(MyComponent)
+const BoundComponent = bind('count', MemoizedComponent)
+```  
 
 ## Example
 This example demonstrates how to build a simple counter application using `bind`. We'll create a centralized state for our counter, bind various components to this state, and show how state changes can lead to UI updates.
