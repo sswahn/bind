@@ -130,16 +130,16 @@ const processBatch = () => {
   }
 }
 
-export const memoize = fn => {
+export const memoize = Component => {
   const cache = new Map()
   return (...args) => {
     const key = JSON.stringify(args)
     if (cache.has(key)) {
       return cache.get(key)
     }
-    const result = fn(...args)
-    cache.set(key, result)
-    return result
+    const element = Component(...args)
+    cache.set(key, element)
+    return element
   }
 }
 
