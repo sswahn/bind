@@ -86,7 +86,7 @@ import { html, withHooks } from '@sswahn/bind'
 
 const App = () => {
   const onUpdate = () => {
-    console.log('Component has mounted, or has been rerendered.')
+    console.log('Component has been mounted or rerendered.')
     return () => {
       console.log('Component has unmounted.')
     } 
