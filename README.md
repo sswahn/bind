@@ -72,8 +72,8 @@ const attributes = {
   class: 'section'
 }
 const children = [
-  html('label'),
-  html('input')
+  html('h1'),
+  html('p')
 ]
 const myDiv = html('div', attributes, children)
 ```
