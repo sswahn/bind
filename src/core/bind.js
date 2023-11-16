@@ -7,6 +7,7 @@ const updates = new WeakMap()
 const unmounts = new WeakMap()
 const handlersRegistry = new Map()
 const memoized = new WeakMap()
+const preserved = new WeakMap()
 
 // consider better error handling system
 
@@ -143,6 +144,16 @@ export const memoize = component => {
   }
 }
 
+export const preserve = (func, dependencies = []) => {
+  return (...args) => {
+    if (!preserved.has(func) || preserved.get(func).dependencies !== dependencies) {
+      preserved.set(func, {dependencies, method: func })
+      return func(...args)
+    }
+    return preserved.get(func).method(...args)
+  }
+}
+
 // Appends and element to the dom and invokes post mount functions
 export const render = (element, root) => {
   if (!(element instanceof Element)) {
@@ -177,7 +188,7 @@ export const bind = (type, component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
-    const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
+    const element = component({context: {[type]: state[type]}, dispatch, params: {...parameters} })
     if (!element) {
       return document.createDocumentFragment()
     }
@@ -308,4 +319,5 @@ const cleanup = (type, component, node) => {
   components.delete(component)
   observables.delete(node)
   memoized.delete(component)
+  preserved.delete(component)
 }
