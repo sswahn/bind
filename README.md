@@ -59,7 +59,7 @@ const BoundComponent = bind('count', MyComponent)
 ```  
 
 ### Render Components  
-To attach your application (or component) to the DOM, use the `render` function. This function expects the component and a DOM root element as its arguments.
+To attach your application to the DOM, use the `render` function. This function expects the component and a DOM root element as its arguments.
 ```javascript
 render(App(), document.getElementBy('root'))
 ```  
