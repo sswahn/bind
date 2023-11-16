@@ -1,1 +1,1 @@
-export {createStore, render, bind, html, withHooks, memoize} from './core/bind.js'
+export {createStore, render, bind, html, withHooks, memoize, preserve} from './core/bind.js'
