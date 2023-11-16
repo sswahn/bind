@@ -182,7 +182,7 @@ export const bind = (type, component) => {
   if (typeof type !== 'string') {
     throw new TypeError('bind: function first argument must be a string.')
   }
-  if (typeof Component !== 'function') {
+  if (typeof component !== 'function') {
     throw new TypeError('bind: second argument must be a function Component.')
   }
   return (...parameters) => {
