@@ -132,24 +132,8 @@ const processBatch = () => {
 
 export const memoize = Component => {
   const cache = new Map()
-  const serialize = value => {
-    if (Array.isArray(value)) {
-      return value.map(serialize)
-    }
-    if (typeof value === 'function') {
-      return `__function:${value.toString()}__`
-    }
-    if (typeof value === 'object' && value !== null) {
-      return Object.entries(value).reduce((acc, [k, v]) => ({ ...acc, [k]: serialize(v) }), {})
-    }
-    return value
-  }
   return obj => {
-    const key = JSON.stringify({
-      context: serialize(obj.context), 
-      dispatch: `__function:${obj.dispatch.toString()}__`, 
-      params: obj.params.map(item => serialize(item))
-    })
+    const key = Component
     if (cache.has(key)) {
       return cache.get(key)
     }
