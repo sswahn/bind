@@ -6,6 +6,7 @@ const observables = new WeakMap()
 const updates = new WeakMap()
 const unmounts = new WeakMap()
 const handlersRegistry = new Map()
+const memoized = new WeakMap()
 
 // consider better error handling system
 
@@ -130,15 +131,14 @@ const processBatch = () => {
   }
 }
 
-export const memoize = Component => {
-  const cache = new Map()
+export const memoize = component => {
   return obj => {
-    const key = Component
-    if (cache.has(key)) {
-      return cache.get(key)
+    const key = component
+    if (memoized.has(key)) {
+      return memoized.get(key)
     }
-    const element = Component(obj)
-    cache.set(key, element)
+    const element = component(obj)
+    memoized.set(key, element)
     return element
   }
 }
@@ -167,7 +167,7 @@ export const render = (element, root) => {
 }
 
 // Binds a component to a specific type in state
-export const bind = (type, Component) => {
+export const bind = (type, component) => {
   if (typeof type !== 'string') {
     throw new TypeError('bind: function first argument must be a string.')
   }
@@ -177,7 +177,7 @@ export const bind = (type, Component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
-    const element = Component({context: {[type]: state[type]}, dispatch, params: parameters})
+    const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
     if (!element) {
       return document.createDocumentFragment()
     }
@@ -307,4 +307,5 @@ const cleanup = (type, component, node) => {
   removeEventHandlers(node)
   components.delete(component)
   observables.delete(node)
+  memoized.delete(component)
 }
