@@ -114,7 +114,7 @@ Here, we initialize the store and render our main `Counter` component to the DOM
 import { createStore, render } from '@sswahn/bind'
 import Counter from './Counter'
 
-createStore({ counter: 0 })
+createStore({ count: 0 })
 render(Counter(), document.getElementById('root'))
 ```  
 
@@ -151,7 +151,7 @@ const Button = ({ context, dispatch }) => {
   const increment = event => {
     dispatch({
       type: 'counter',
-      payload: context.counter + 1
+      payload: context.count + 1
     })
   }
   return html('button', {
@@ -160,7 +160,7 @@ const Button = ({ context, dispatch }) => {
   })
 }
 
-export default bind('counter', Button)
+export default bind('count', Button)
 ```
 
 ### Creating the Display Component (`Display.js`)
@@ -171,11 +171,11 @@ import { html, bind } from '@sswahn/bind'
 
 const Display = ({ context }) => {
   return html('span', {
-    textContent: context.counter
+    textContent: context.count
   })
 }
 
-export default bind('counter', Display)
+export default bind('count', Display)
 ```
 
 ## License
