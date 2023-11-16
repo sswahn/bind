@@ -132,12 +132,28 @@ const processBatch = () => {
 
 export const memoize = Component => {
   const cache = new Map()
-  return (...args) => {
-    const key = JSON.stringify(args)
+  const serialize = value => {
+    if (Array.isArray(value)) {
+      return value.map(serialize)
+    }
+    if (typeof value === 'function') {
+      return `__function:${value.toString()}__`
+    }
+    if (typeof value === 'object' && value !== null) {
+      return Object.entries(value).reduce((acc, [k, v]) => ({ ...acc, [k]: serialize(v) }), {})
+    }
+    return value
+  }
+  return obj => {
+    const key = JSON.stringify({
+      context: serialize(obj.context), 
+      dispatch: `__function:${obj.dispatch.toString()}__`, 
+      params: obj.params.map(item => serialize(item))
+    })
     if (cache.has(key)) {
       return cache.get(key)
     }
-    const element = Component(...args)
+    const element = Component(obj)
     cache.set(key, element)
     return element
   }
@@ -167,17 +183,17 @@ export const render = (element, root) => {
 }
 
 // Binds a component to a specific type in state
-export const bind = (type, component) => {
+export const bind = (type, Component) => {
   if (typeof type !== 'string') {
     throw new TypeError('bind: function first argument must be a string.')
   }
-  if (typeof component !== 'function') {
-    throw new TypeError('bind: function second argument must be a function.')
+  if (typeof Component !== 'function') {
+    throw new TypeError('bind: second argument must be a function Component.')
   }
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
-    const element = component({context: {[type]: state[type]}, dispatch, params: parameters})
+    const element = Component({context: {[type]: state[type]}, dispatch, params: parameters})
     if (!element) {
       return document.createDocumentFragment()
     }
