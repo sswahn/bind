@@ -133,7 +133,7 @@ const processBatch = () => {
 }
 
 export const memoize = component => {
-  const deepEqual = (a, b) => {
+  const deepObjectsEqual = (a, b) => {
     if (a === b) {
       return true
     }
@@ -148,7 +148,7 @@ export const memoize = component => {
   return obj => {
     if (memoized.has(component)) {
       const cached = memoized.get(component)
-      if(deepEqual(cached.dependencies, obj)) {
+      if(deepObjectsEqual(cached.dependencies, obj)) {
         return cached.component(cached.dependencies)
       }
     }
