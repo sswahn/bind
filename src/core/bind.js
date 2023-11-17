@@ -133,8 +133,25 @@ const processBatch = () => {
 }
 
 export const memoize = component => {
+  const serialize = value => {
+    if (Array.isArray(value)) {
+      return value.map(serialize)
+    }
+    if (typeof value === 'function') {
+      return `__function:${value.toString()}__`
+    }
+    if (typeof value === 'object' && value !== null) {
+      return Object.entries(value).reduce((acc, [k, v]) => ({ ...acc, [k]: serialize(v) }), {})
+    }
+    return value
+  }
   return obj => {
-    const key = component
+    const key = JSON.stringify({
+      component: `__component:${component.toString()}__`,
+      context: serialize(obj.context), 
+      dispatch: `__function:${obj.dispatch.toString()}__`, 
+      params: obj.params.map(item => serialize(item)) 
+    })
     if (memoized.has(key)) {
       return memoized.get(key)
     }
@@ -145,8 +162,24 @@ export const memoize = component => {
 }
 
 export const preserve = (func, dependencies = []) => {
+  const deepArraysEqual = (arr1, arr2) => {
+    if (arr1.length !== arr2.length) {
+      return false
+    }
+    for (const [index, value] of arr1.entries()) {
+      if (Array.isArray(arr1[index]) && Array.isArray(arr2[index])) {
+        if (!deepArraysEqual(arr1[index], arr2[index])) {
+          return false
+        }
+      } 
+      if (arr1[index] !== arr2[index]) {
+        return false
+      }
+    }
+    return true
+  }
   return (...args) => {
-    if (!preserved.has(func) || preserved.get(func).dependencies !== dependencies) {
+    if (!preserved.has(func) || !deepArraysEqual(preserved.get(func).dependencies, dependencies)) {
       preserved.set(func, {dependencies, method: func })
       return func(...args)
     }
@@ -188,7 +221,7 @@ export const bind = (type, component) => {
   return (...parameters) => {
     const existing = subscribers.get(type) || []
     subscribers.set(type, [...existing, {component, parameters}])
-    const element = component({context: {[type]: state[type]}, dispatch, params: {...parameters} })
+    const element = component({context: {[type]: state[type]}, dispatch, params: parameters })
     if (!element) {
       return document.createDocumentFragment()
     }
