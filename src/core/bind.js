@@ -133,31 +133,27 @@ const processBatch = () => {
 }
 
 export const memoize = component => {
-  const serialize = value => {
-    if (Array.isArray(value)) {
-      return value.map(serialize)
+  const deepEqual = (a, b) => {
+    if (a === b) {
+      return true
     }
-    if (typeof value === 'function') {
-      return `__function:${value.toString()}__`
+    if (typeof a !== 'object' || typeof b !== 'object') {
+      return false
     }
-    if (typeof value === 'object' && value !== null) {
-      return Object.entries(value).reduce((acc, [k, v]) => ({ ...acc, [k]: serialize(v) }), {})
-    }
-    return value
+    return (
+      Object.keys(a).length === Object.keys(b).length &&
+      Object.keys(a).every(key => deepEqual(a[key], b[key]))
+    )
   }
   return obj => {
-    const key = JSON.stringify({
-      component: `__component:${component.toString()}__`,
-      context: serialize(obj.context), 
-      dispatch: `__function:${obj.dispatch.toString()}__`, 
-      params: obj.params.map(item => serialize(item)) 
-    })
-    if (memoized.has(key)) {
-      return memoized.get(key)
+    if (memoized.has(component)) {
+      const cached = memoized.get(component)
+      if(deepEqual(cached.dependencies, obj)) {
+        return cached.component(cached.dependencies)
+      }
     }
-    const element = component(obj)
-    memoized.set(key, element)
-    return element
+    memoized.set(component, {component, dependencies: obj})
+    return component(obj)
   }
 }
 
