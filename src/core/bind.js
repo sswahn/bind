@@ -132,6 +132,7 @@ const processBatch = () => {
   }
 }
 
+// memoized components should update with preserved functions
 export const memoize = component => {
   const deepObjectsEqual = (a, b) => {
     if (a === b) {
