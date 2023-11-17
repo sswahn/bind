@@ -162,17 +162,11 @@ export const preserve = (func, dependencies = []) => {
     if (arr1.length !== arr2.length) {
       return false
     }
-    for (const [index, value] of arr1.entries()) {
-      if (Array.isArray(arr1[index]) && Array.isArray(arr2[index])) {
-        if (!deepArraysEqual(arr1[index], arr2[index])) {
-          return false
-        }
-      } 
-      if (arr1[index] !== arr2[index]) {
-        return false
-      }
-    }
-    return true
+    return arr1.every((value, index) => {
+      return Array.isArray(value) && Array.isArray(arr2[index])
+        ? deepArraysEqual(value, arr2[index])
+        : value === arr2[index]
+    })
   }
   return (...args) => {
     if (!preserved.has(func) || !deepArraysEqual(preserved.get(func).dependencies, dependencies)) {
